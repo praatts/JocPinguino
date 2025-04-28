@@ -26,7 +26,7 @@ public class bbdd {
 		
 		Scanner scan = new Scanner(System.in);
 		
-		String s = "fuera";
+		String s = scan.nextLine();
 		
 		s = s.toLowerCase();
 		
@@ -50,6 +50,7 @@ public class bbdd {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			con = DriverManager.getConnection(URL, USER, PWD);
 			System.out.println("Conectando...");
+			System.out.println("Se ha conectado a la base de datos existosamente!");
 		} catch (ClassNotFoundException e) {
 			System.out.println("No se ha encontrado el driver " + e);
 		} catch (SQLException e) {

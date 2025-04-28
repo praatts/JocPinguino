@@ -1,5 +1,5 @@
 package controlador;
-import java.sql.*;
+import java.sql.Connection;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,12 +11,11 @@ public class main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		//System.out.println(getClass().getResource("/pantallaPrincipal.fxml"));
-		
 		Connection con = bbdd.conectarBaseDatos();
 		GuardarConBD.setConexion(con);
+		
 	    FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/pantallaPrincipal.fxml"));
 	    Parent root = loader.load();
-
 	    Scene scene = new Scene(root);
 	    primaryStage.setScene(scene);
 	    primaryStage.setTitle("El Juego del Pingüino");

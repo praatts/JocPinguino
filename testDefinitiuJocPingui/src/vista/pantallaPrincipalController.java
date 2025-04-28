@@ -11,7 +11,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import controlador.bbdd;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
@@ -35,22 +34,13 @@ public class pantallaPrincipalController {
     @FXML private TextField colorField;
     @FXML private Button loginButton;
     @FXML private Button registerButton;
-    	  private Connection conexion;
+    	  private Connection con;
 
     @FXML
     private void initialize() {
         // This method is called automatically after the FXML is loaded
         // You can set initial values or add listeners here
         System.out.println("pantallaPrincipalController initialized");
-        try {
-        	conexion = bbdd.conectarBaseDatos();
-        	System.out.println("Conexión establecida a la base de datos exitosamente!");
-    
-        } catch (Exception e) {
-        	e.printStackTrace();
-        	mostrarAlerta("Error de conexión", "No se ha podido establecer conexión con la base de datos");
-        	Platform.exit(); //Cierra la aplicación en caso de no poder conectar con la base de datos.
-        }
     }
 
     @FXML
@@ -88,8 +78,8 @@ public class pantallaPrincipalController {
         // Basic check (just for demo, replace with real login logic)
         if (!usuario.isEmpty() && !contrasenya.isEmpty()) {
             try {
-            	
-            	
+            	Connection con = GuardarConBD.getConexion();
+        		     	
             	String sqlSelect = "SELECT * FROM JUGADOR WHERE NICKNAME = '" + usuario + "' AND CONTRASENYA = '" + contrasenya + "'";
             	ResultSet rs = bbdd.select(con, sqlSelect);
             	
@@ -134,7 +124,7 @@ public class pantallaPrincipalController {
         
         if (!usuario.isEmpty() && !contrasenya.isEmpty() && !color.isEmpty()) {
         	try {
-        		Connection con = bbdd.conectarBaseDatos();
+        		Connection con = GuardarConBD.getConexion();
         		
         		if (nUsuarioDisponible(con, usuario)) {
         			String insert = "INSERT INTO JUGADOR (ID_JUGADOR, NICKNAME, CONTRASENYA, NUM_PARTIDAS_JUGADAS, COLOR) "

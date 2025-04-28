@@ -89,7 +89,6 @@ public class pantallaPrincipalController {
         if (!usuario.isEmpty() && !contrasenya.isEmpty()) {
             try {
             	
-            	Connection con = bbdd.conectarBaseDatos();
             	
             	String sqlSelect = "SELECT * FROM JUGADOR WHERE NICKNAME = '" + usuario + "' AND CONTRASENYA = '" + contrasenya + "'";
             	ResultSet rs = bbdd.select(con, sqlSelect);

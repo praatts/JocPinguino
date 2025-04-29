@@ -86,17 +86,11 @@ public class Tablero {
 				casillasVacias++;
 				}
 			break;	
-			
-			
 			}
-			
 			casillas.add(evt);
 			contadorCasillas++;
-			
 		}
 		casillas.add(new Evento(10, "Línea de meta"));
 		return casillas;
 	}
-
-	
 }

@@ -5,6 +5,7 @@ import java.util.*;
 import java.util.ArrayList;
 import java.util.Random;
 import controlador.*;
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
 
 import javafx.scene.control.Alert.AlertType;
@@ -293,18 +294,15 @@ public class TipoCasilla extends Casilla {
 					+ pingu.getInventario().getDados());
 			alerta.showAndWait();
 		}
-
 	}
-
+	
 	public void lineaDeMeta(Pinguino pingu) {
-
-		if (pingu.getPosicion() == 49) {
-			Alert alerta = new Alert(AlertType.CONFIRMATION);
-			alerta.setTitle("Ganador");
-			alerta.setHeaderText(null);
-			alerta.setContentText(pingu.getNombre() + " ha ganado!");
-			alerta.showAndWait();
-		}
-	}
-
+        if (pingu.getPosicion() == 49) {
+            Alert alerta = new Alert(AlertType.INFORMATION);
+            alerta.setTitle("Ganador");
+            alerta.setHeaderText(null);
+            alerta.setContentText(pingu.getNombre() + " ha ganado!");
+            alerta.showAndWait();
+        }
+    }
 }

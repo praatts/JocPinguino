@@ -183,13 +183,16 @@ public class pantallaJuegoController {
 		// Update the position
 		moveP1(diceResult);
 	}
+	private TipoCasilla tipoCasilla = new TipoCasilla("", COLUMNS);
 
+	
 	public void moveP1(int steps) {
 		if (pingu != null) {
 			pingu.setPosicion(pingu.getPosicion() + steps);
 
 			if (pingu.getPosicion() >= 50) {
 				pingu.setPosicion(49); // 5 columns * 10 rows = 50 cells (index 0 to 49)
+			tipoCasilla.lineaDeMeta(pingu);
 			}
 		}
 

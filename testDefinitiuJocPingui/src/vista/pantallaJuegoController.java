@@ -310,6 +310,7 @@ public class pantallaJuegoController {
 	@FXML
 	private void handleMostrarInventario(ActionEvent Event) {
 	    Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+	    alerta.setHeaderText(null);
 		alerta.setTitle("Inventario de " + pingu.getNombre());
 		alerta.setContentText("Dados especiales totales: " + pingu.getInventario().getDados() +
 				"\n -Dados lentos: " + pingu.getInventario().getDadosL() + 

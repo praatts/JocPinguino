@@ -120,9 +120,10 @@ public class pantallaJuegoController {
 			case 8:
 				iconoEvento = setIcono("/resources/iconoDados.png");
 				break;
-			case 9:
+			case 10:
 				iconoEvento = setIcono("/resources/finish.png");
 				break;
+
 			default:
 				break;
 			}

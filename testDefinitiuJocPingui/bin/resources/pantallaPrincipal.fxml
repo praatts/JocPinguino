@@ -47,7 +47,11 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.control.ComboBox?>
 
-<VBox prefHeight="400.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vista.pantallaPrincipalController">
+<VBox prefHeight="400.0" prefWidth="300.0" 
+      xmlns="http://javafx.com/javafx/23.0.1" 
+      xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="vista.pantallaPrincipalController"
+      style="-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #e0f7fa, #ffffff);">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -84,12 +88,16 @@
                   
                   <TextField fx:id="userField" maxWidth="200.0" prefWidth="200.0" promptText="Usuario..." style="-fx-background-color: #e0f7fa; -fx-border-color: #00838f; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 5;" />
                   <PasswordField fx:id="passField" maxWidth="200.0" prefWidth="200.0" promptText="Contraseña..." style="-fx-background-color: #e0f7fa; -fx-border-color: #00838f; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 5;" />
- 				  <ComboBox fx:id="colorField" maxWidth="200.0" prefWidth="200.0" promptText="Color del pingüino..." style="-fx-background-color: #e0f7fa; -fx-border-color: #00838f; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 5;" />
+ 				  <ComboBox fx:id="colorField" maxWidth="200.0" prefWidth="200.0" promptText="Color del pingüino..."
+          style="-fx-background-color: #e0f7fa; -fx-border-color: #00838f; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 5; -fx-prompt-text-fill: #757575;" />
                   <HBox alignment="CENTER" spacing="50.0">
      
                      <children>
-                        <Button fx:id="loginButton" mnemonicParsing="false" onAction="#handleLogin" text="Login" />
-                        <Button fx:id="registerButton" mnemonicParsing="false" onAction="#handleRegister" text="Registro" />
+                        <Button fx:id="loginButton" mnemonicParsing="false" onAction="#handleLogin" text="Login"
+        						style="-fx-background-color: #00838f; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 8 20; -fx-font-weight: bold;" />
+
+						<Button fx:id="registerButton" mnemonicParsing="false" onAction="#handleRegister" text="Registro"
+						        style="-fx-background-color: #00838f; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 8 20; -fx-font-weight: bold;" />
                      </children>
                   </HBox>
                </children>

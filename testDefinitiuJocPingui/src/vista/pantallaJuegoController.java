@@ -16,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.application.Platform;
 public class pantallaJuegoController {
 
 	// Menu items
@@ -152,8 +153,8 @@ public class pantallaJuegoController {
 
 	@FXML
 	private void handleNewGame() {
-		System.out.println("New game.");
-		// TODO
+		
+		
 	}
 
 	@FXML
@@ -170,8 +171,13 @@ public class pantallaJuegoController {
 
 	@FXML
 	private void handleQuitGame() {
-		System.out.println("Exit...");
-		// TODO
+		Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+		alerta.setTitle("Juego cerrado");
+		alerta.setHeaderText(null);
+		alerta.setContentText("Se ha cerrado el juego, gracias por jugar!");
+		
+		alerta.showAndWait();
+		Platform.exit();
 	}
 
 	@FXML

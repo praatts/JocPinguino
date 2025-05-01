@@ -81,6 +81,7 @@ public class pantallaMenu {
 
 						bbdd.insert(con, insertInventario);
 			
+						con.commit();
 			// Carga de la ventana del tablero
 
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/pantallaJuego.fxml"));

@@ -61,18 +61,27 @@ public class pantallaMenu {
 			
 			
 			
-			//Insert del inventario e información de la partida a la base de datos
+			//Insert de inventario e información de la partida a la base de datos
 			
-			String insertInventario = "INSERT INTO inventario (id_inventario, num_peces, num_dadosesp, num_dadoslentos, num_dadosrapidos, num_bolasnieve, posicion_jugador, idpropietario, id_partida" + 
-			"VALUES (idInventarios.nextval, 0, 0, 0, 0, 0, 0, " + pingu.getId() + ", idPartidas.nextval)"; 
-			
-			bbdd.insert(con, insertInventario);
-			
-			String insertPartida = "INSERT INTO partida (idpartida, fecha, tablero, estado, idInvenatario, idCreador)"
-								+ "VALUES (idPartidas.currval, SYSDATE, " + casillasBD + ", 'en curso', idInventarios.currval, " + pingu.getId() + ")";
-			
+			String insertPartida = "INSERT INTO partida (idpartida, fecha, tablero, estado, idInventario, idCreador) "
+			        + "VALUES (idPartidas.nextval, SYSDATE, " + casillasBD + ", 'en curso', NULL, " + pingu.getId() + ")";
+
 			bbdd.insert(con, insertPartida);
 			
+			
+			String selectID = "SELECT idPartidas.currval FROM dual";
+			ResultSet rs = bbdd.select(con, selectID);
+			int idPartida = 0;
+			if (rs.next()) {
+				idPartida = rs.getInt("currval");
+			}
+			
+			String insertInventario = "INSERT INTO inventario (id_inventario, num_peces, num_dadosesp, num_dadoslentos, num_dadosrapidos, num_bolasnieve, posicion_jugador, idpropietario, id_partida) "
+			        + "VALUES (idInventarios.nextval, 0, 0, 0, 0, 0, 0, " + pingu.getId() + ", " + idPartida + ")"; 
+			
+			bbdd.insert(con, insertInventario);
+
+		
 			
 			//Carga de la ventana del tablero
 			

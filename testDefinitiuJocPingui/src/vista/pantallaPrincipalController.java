@@ -1,5 +1,6 @@
 package vista;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -63,9 +64,13 @@ public class pantallaPrincipalController {
 
     @FXML
     private void handleQuitGame() {
-        System.out.println("Quit Game clicked");
-        // TODO
-        System.exit(0);
+       Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+       alerta.setTitle("Cierre del juego");
+       alerta.setHeaderText(null);
+       alerta.setContentText("Se va a cerrar el juego, gracias por jugar!");
+       alerta.showAndWait();
+       
+       Platform.exit();
     }
     
     @FXML

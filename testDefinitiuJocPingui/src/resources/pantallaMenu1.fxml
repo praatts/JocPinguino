@@ -62,10 +62,10 @@
 			    onAction="#handleNewGame"/>
 
                 <Button fx:id="partidaExistenteButton" text="CARGAR PARTIDA EXISTENTE"
-                        style="-fx-background-color: #1976d2; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20; onAction="#handleLoadGame"/>
+                        style="-fx-background-color: #1976d2; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20;"/>
 
                 <Button fx:id="cerrarSesionButton" text="CERRAR SESIÓN / SALIR"
-                        style="-fx-background-color: #b71c1c; -fx-text-fill: white; -fx-font-size: 13px; -fx-padding: 8 20; onAction="#handleQuitGame"/>
+                        style="-fx-background-color: #b71c1c; -fx-text-fill: white; -fx-font-size: 13px; -fx-padding: 8 20;" onAction="#handleQuitGame"/>
             </children>
         </VBox>
     </children>

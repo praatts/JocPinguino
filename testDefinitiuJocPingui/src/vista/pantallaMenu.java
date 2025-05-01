@@ -47,4 +47,15 @@ public class pantallaMenu {
 		}
 	}
 	
+	@FXML
+	public void handleQuitGame(ActionEvent Event) {
+		   Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+	       alerta.setTitle("Cierre del juego");
+	       alerta.setHeaderText(null);
+	       alerta.setContentText("Se va a cerrar el juego, gracias por jugar!");
+	       alerta.showAndWait();
+	       
+	       Platform.exit();
+	}
+	
 }

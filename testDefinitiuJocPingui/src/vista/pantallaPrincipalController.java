@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -12,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import java.sql.*;
@@ -31,7 +33,7 @@ public class pantallaPrincipalController {
 
     @FXML private TextField userField;
     @FXML private PasswordField passField;
-    @FXML private TextField colorField;
+    @FXML private ComboBox<String> colorField;
     @FXML private Button loginButton;
     @FXML private Button registerButton;
     	  private Connection con;
@@ -40,8 +42,33 @@ public class pantallaPrincipalController {
     private void initialize() {
         // This method is called automatically after the FXML is loaded
         // You can set initial values or add listeners here
+    	 colorField.setItems(FXCollections.observableArrayList(
+   	          "Amarillo", "Azul", "Morado", "Naranja", "Rojo", "Rosa", "Verde"
+   	      ));
+
+   	      colorField.setOnAction(event -> {
+   	          String selectedColor = colorField.getValue();
+   	          if (selectedColor != null) {
+   	              String cssColor = mapColorToCSS(selectedColor);
+   	              colorField.setStyle("-fx-background-color: " + cssColor + "; -fx-text-fill: white;");
+   	          }
+   	      });
         System.out.println("pantallaPrincipalController initialized");
+        
     }
+    
+    private String mapColorToCSS(String color) {
+	    switch (color.toLowerCase()) {
+	        case "amarillo": return "yellow";            
+	        case "azul": return "#87CEFA";               
+	        case "morado": return "#D8BFD8";             
+	        case "naranja": return "orange";             
+	        case "rojo": return "#F08080";               
+	        case "rosa": return "pink";                  
+	        case "verde": return "#90EE90";              
+	        default: return "white";
+	    }
+	}
 
     @FXML
     private void handleNewGame() {
@@ -120,7 +147,7 @@ public class pantallaPrincipalController {
     private void handleRegister(ActionEvent event) {
         String usuario = userField.getText();
         String contrasenya = passField.getText();
-        String color = colorField.getText();
+        String color = colorField.getValue();
         
         if (!usuario.isEmpty() && !contrasenya.isEmpty() && !color.isEmpty()) {
         	try {

@@ -6,11 +6,50 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-
 	<classpathentry kind="lib" path="C:/Users/alber/Downloads/javafx-sdk-17/lib/javafx.web.jar">
-	<classpathentry kind="lib" path="F:/DAW 2024-2025/Proyecto Pinguino/Eclipse Java FX/javafx-sdk-17.0.15/lib/javafx.base.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="F:/DAW 2024-2025/Proyecto Pinguino/Eclipse Java FX/javafx-sdk-17.0.15/lib/javafx.controls.jar">
+	<classpathentry kind="lib" path="C:/Users/alber/Downloads/javafx-sdk-17/lib/javafx.controls.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/alber/Downloads/javafx-sdk-17/lib/javafx.fxml.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/alber/Downloads/javafx-sdk-17/lib/javafx.graphics.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/alber/Downloads/javafx-sdk-17/lib/javafx.media.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/alber/Downloads/javafx-sdk-17/lib/javafx.swing.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/alber/Downloads/javafx-sdk-17/lib/javafx.base.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/alber/Downloads/javafx-sdk-17/lib/javafx-swt.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/alber/Downloads/ojdbc8.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

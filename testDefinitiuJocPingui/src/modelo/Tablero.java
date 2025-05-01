@@ -6,24 +6,20 @@ import java.util.Random;
 
 public class Tablero {
 
-	private int numeroCasillas;
+	private static final int totalCasillas = 50;
 	private ArrayList<Evento> casillas = new ArrayList<>();
 
-	public Tablero (int numeroCasillas) {
-	this.numeroCasillas = 50;
-	this.casillas = new ArrayList<>();
+	public Tablero () {
+	this.casillas = new ArrayList<>(totalCasillas);
+	this.creacionTablero();
 	}
 
-	public void setNumeroCasillas(String numeroCasillas){
-		this.numeroCasillas = 50;
-		}
-
-	public int getNumeroCasillas() {
-		return numeroCasillas;
+	public int getTotalCasillas() {
+		return totalCasillas;
 	}
 	
 	public ArrayList<Evento> getCasillas() {
-		return casillas;
+		return this.casillas;
 	}
 
 	public void setCasillas(ArrayList<Evento> casillas) {
@@ -31,19 +27,18 @@ public class Tablero {
 	}
 
 	public ArrayList<Evento> creacionTablero () {
-		int generador = 0;
-		Evento evt = null;
-		int contadorOso = 0;
-		Random r = new Random();
-		int contadorCasillas = 0;
-		int casillasVacias = 0;
-		
 		casillas.clear();
 		
 		casillas.add(new Evento(1, "Casilla vacía"));
 		casillas.add(new Evento(1, "Casilla vacía"));
+		int generador = 0;
+		int contadorOso = 0;
+		Random r = new Random();
+		int casillasVacias = 0;
 		
-		while (contadorCasillas < 47) {
+		
+		while (casillas.size() < totalCasillas - 1) {
+			Evento evt = null;
 			generador = r.nextInt(15) + 1; 
 			
 		
@@ -90,8 +85,10 @@ public class Tablero {
 			
 			}
 			
-			casillas.add(evt);
-			contadorCasillas++;
+			if (evt != null) {
+				casillas.add(evt);
+			}
+			
 			
 		}
 		casillas.add(new Evento(10, "Línea de meta"));

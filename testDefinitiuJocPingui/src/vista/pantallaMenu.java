@@ -42,57 +42,50 @@ public class pantallaMenu {
 		try {
 
 			Connection con = GuardarConBD.getConexion();
+			con.setAutoCommit(false);
 			Pinguino pingu = GuardarConBD.getPinguino();
+			
 			// Crear tablero y obtener casillas
 
-			Tablero tablero = new Tablero(50);
+			Tablero tablero = new Tablero();
 			ArrayList<Evento> casillas = tablero.creacionTablero();
 			System.out.println("Casillas creadas: " + casillas.size());
 			// Conversión compatible del tablero para la base de datos
-			StringBuilder casillasBD = new StringBuilder("ARRAYTAULELL(");
+			
+			String tableroString = "ARRAYTAULELL_V2(";
 			for (int i = 0; i < casillas.size(); i++) {
-				casillasBD.append("'").append(casillas.get(i).getInfoEvento()).append("'");
+				String infoEvt = casillas.get(i).getInfoEvento().replace("'", "''");
+				tableroString += "'" + infoEvt + "'";
+				
 				if (i < casillas.size() - 1) {
-					casillasBD.append(", ");
+					tableroString += ",";
 				}
 			}
-
-			casillasBD.append(")");
-
-			// Insert inventario + obtención de ID de la partida
-
-			String insertInventario = "INSERT INTO inventario (id_inventario, num_peces, num_dadosesp, num_dadoslentos, num_dadosrapidos, num_bolasnieve, posicion_jugador, idpropietario) "
-					+ "VALUES (idInventarios.nextval, 0, 0, 0, 0, 0, 0, " + pingu.getId() + ")";
-
-			bbdd.insert(con, insertInventario);
 			
-			int idInventario = 0;
-			ResultSet rsInv = bbdd.select(con, "SELECT idInventarios.currval FROM dual");
-			if (rsInv.next()) {
-				idInventario = rsInv.getInt(1);
-			}
-			rsInv.close();
+			tableroString += ")";
 			
 			//Insert información de la partida + obtención de ID de la partida
 			
-			String insertPartida = "INSERT INTO partida (idpartida, fecha, tablero, estado, idInventario, idCreador) " +
-                    "VALUES (idPartidas.nextval, SYSDATE, " + casillasBD.toString() + ", 'en curso', " + idInventario + ", " + pingu.getId() + ")";
+			String insertPartida = "INSERT INTO partida (idpartida, fecha, estado, idCreador, tablero) " +
+                    "VALUES (idPartidas.nextval, SYSDATE, 'en curso', " + pingu.getId() + ", " + tableroString + ")";
 			
 			bbdd.insert(con, insertPartida);
-			
+			System.out.println("SQL: " + insertPartida);
+			con.commit();
 			int idPartida = 0;
 			ResultSet rsPartida = bbdd.select(con, "SELECT idPartidas.currval FROM dual");
 			if (rsPartida.next()) {
 				idPartida = rsPartida.getInt(1);
+				System.out.println("ID partida generada: " + idPartida);
 			}
 			rsPartida.close();
 			
-			//Actualizar la tabla inventario con la id de la partida correspondiente
-			
-			String actualizarInventario = "UPDATE inventario SET id_partida = " + idPartida + " WHERE id_inventario = " + idInventario;
-			bbdd.update(con, actualizarInventario);
-			
-			
+			// Insert inventario + obtención de ID de la partida
+
+						String insertInventario = "INSERT INTO inventario (id_inventario, num_peces, num_dadosesp, num_dadoslentos, num_dadosrapidos, num_bolasnieve, posicion_jugador, idpropietario, id_partida) "
+								+ "VALUES (idInventarios.nextval, 0, 0, 0, 0, 0, 0, " + pingu.getId() + ", " + idPartida + ")";
+
+						bbdd.insert(con, insertInventario);
 			
 			// Carga de la ventana del tablero
 

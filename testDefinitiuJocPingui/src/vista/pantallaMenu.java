@@ -48,21 +48,15 @@ public class pantallaMenu {
 			// Crear tablero y obtener casillas
 
 			Tablero tablero = new Tablero();
-			ArrayList<Evento> casillas = tablero.creacionTablero();
-			System.out.println("Casillas creadas: " + casillas.size());
+			tablero.creacionTablero();
 			// Conversión compatible del tablero para la base de datos
 			
 			String tableroString = "ARRAYTAULELL_V2(";
-			for (int i = 0; i < casillas.size(); i++) {
-				String infoEvt = casillas.get(i).getInfoEvento().replace("'", "''");
-				tableroString += "'" + infoEvt + "'";
-				
-				if (i < casillas.size() - 1) {
-					tableroString += ",";
-				}
-			}
-			
-			tableroString += ")";
+			for (int i = 0; i < tablero.getCasillas().size(); i++) {
+				 tableroString += "'" + tablero.getCasillas().get(i).getInfoEvento().replace("'", "''") + "'";
+		            if (i < tablero.getCasillas().size() - 1) tableroString += ",";
+		        }
+		        tableroString += ")";
 			
 			//Insert información de la partida + obtención de ID de la partida
 			
@@ -92,6 +86,10 @@ public class pantallaMenu {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/pantallaJuego.fxml"));
 			Parent pantallaJuegoRoot = loader.load();
 			pantallaJuegoController controladorJuego = loader.getController();
+			controladorJuego.tablero = tablero;
+			controladorJuego.pingu = pingu;
+			controladorJuego.colocarIconos();
+			
 			Scene pantallaJuego = new Scene(pantallaJuegoRoot);
 			Stage stage = (Stage) ((Node) Event.getSource()).getScene().getWindow();
 			stage.setScene(pantallaJuego);

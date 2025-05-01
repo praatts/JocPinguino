@@ -57,7 +57,7 @@ public class pantallaJuegoController {
 
 	// Game board and player pieces
 	@FXML
-	private GridPane tablero;
+	private GridPane gridPaneTablero;
 	@FXML
 	private Circle P1;
 	@FXML
@@ -71,26 +71,26 @@ public class pantallaJuegoController {
 	private int p1Position = 0; // Tracks current position (from 0 to 49 in a 5x10 grid)
 	private final int COLUMNS = 5;
 	private ArrayList<Evento> casillas;
-	private Pinguino pingu;
-
-
+	public Pinguino pingu;
+	public Tablero tablero;
+	
+  
+	
+	
 	@FXML
 	private void initialize() {
 		// This method is called automatically after the FXML is loaded
 		// You can set initial values or add listeners here
 		
-		pingu = GuardarConBD.getPinguino();
-		eventos.setText("¡El juego ha comenzado!");
-		colocarIconos();
 
 	}
 
-	private void colocarIconos() {
+	public void colocarIconos() {
 		Evento evento = null;
 		int fila = 0;
 		int columna = 0;
-		for (int i = 0; i < casillas.size(); i++) {
-			evento = casillas.get(i);
+		for (int i = 0; i < tablero.getCasillas().size(); i++) {
+			evento = tablero.getCasillas().get(i);
 
 			fila = i / COLUMNS;
 			columna = i % COLUMNS;
@@ -131,7 +131,7 @@ public class pantallaJuegoController {
 				GridPane.setColumnIndex(iconoEvento, columna);
 				GridPane.setHalignment(iconoEvento, HPos.CENTER);
 				GridPane.setValignment(iconoEvento, VPos.CENTER);
-				tablero.getChildren().add(iconoEvento);
+				gridPaneTablero.getChildren().add(iconoEvento);
 			}
 		}
 	}
@@ -328,4 +328,6 @@ public class pantallaJuegoController {
 		System.out.println("Snow.");
 		// TODO
 	}
+
+	
 }

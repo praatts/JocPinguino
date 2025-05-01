@@ -36,13 +36,17 @@ public class pantallaPrincipalController {
     @FXML private Button loginButton;
     @FXML private Button registerButton;
     	  private Connection con;
-
+    	  private Pinguino pingu;
+    	  private Tablero tablero;
+    	  ArrayList<Evento> casillas;
     @FXML
     private void initialize() {
         // This method is called automatically after the FXML is loaded
         // You can set initial values or add listeners here
         System.out.println("pantallaPrincipalController initialized");
     }
+    
+    
 
     @FXML
     private void handleNewGame() {

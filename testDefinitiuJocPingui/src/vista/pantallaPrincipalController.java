@@ -89,19 +89,25 @@ public class pantallaPrincipalController {
             		String color = rs.getString("COLOR");
             		Inventario inventario = new Inventario(0, 0, 0, 0, 0);
                     Pinguino pingu = new Pinguino(nickname, color, id, 0, inventario, "Jugador");
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/pantallaJuego.fxml"));
-                    Parent pantallaJuegoRoot = loader.load();
-                    pantallaJuegoController controladorJuego = loader.getController();
                     
-                    controladorJuego.setPinguino(pingu);
+                    //Carga la pantalla para seleccionar partida nueva, existente o cerrar/salir del juego
+                    
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/pantallaMenu1.fxml"));
+                    Parent pantallaMenuPartidasRoot = loader.load();
+                    
+                    //Carga del controlador del menú de partidas
+                    pantallaMenu controladorPartidas = loader.getController();
+                    controladorPartidas.mostrarNombreLogin(pingu);
                     
                     
-                    Scene pantallaJuegoScene = new Scene(pantallaJuegoRoot);
-
+            
+                    //Scene pantallaJuegoScene = new Scene(pantallaJuegoRoot);
+                    Scene pantallaMPartidasScene = new Scene(pantallaMenuPartidasRoot);
                     // Get the current stage using the event
                     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                    stage.setScene(pantallaJuegoScene);
-                    stage.setTitle("Pantalla de Juego");
+                    //stage.setScene(pantallaJuegoScene);
+                    stage.setScene(pantallaMPartidasScene);
+                    stage.setTitle("Pantalla de Selección de partida");
             	} else {
             		System.out.println("Usuario o contraseña incorrectos");
             		mostrarAlerta("Error", "El usuario o contraseña son incorrectos");

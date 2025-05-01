@@ -42,40 +42,39 @@ public class pantallaMenu {
 		try {
 			
 			Connection con = GuardarConBD.getConexion();
-			
+			Pinguino pingu = GuardarConBD.getPinguino();
 			//Crear tablero y obtener casillas
 			
 			Tablero tablero = new Tablero(50);
 			ArrayList<Evento> casillas = tablero.creacionTablero();
 			
 			//Conversión compatible del tablero para la base de datos
-			String casillasBD = "ARRAYTAULELL(";
+			StringBuilder casillasBD = new StringBuilder("ARRAYTAULELL(");
 			for (int i = 0; i < casillas.size(); i++) {
-				casillasBD += "'" + casillas.get(i).getInfoEvento() + "'";
+				casillasBD.append("'").append(casillas.get(i).getInfoEvento()).append("0");
 				if (i < casillas.size() - 1) {
-					casillasBD += ", ";
+					casillasBD.append(", ");
 				}
 			}
 			
-			casillasBD += ")";
+			casillasBD.append(")");
 			
-			//Coger la id de la partida correspondiente de la secuencia.
-			ResultSet rs = bbdd.select(con, "SELECT idPartidas.nextval FROM dual");
-			rs.next();
-			int idPartida = rs.getInt(1);
 			
-			//Coger la id de inventario correspondiente de la secuencia.
 			
-			ResultSet rsInventario = bbdd.select(con, "SELECT idInventarios.nextval FROM dual");
-			rsInventario.next();
-			int idInventario = rsInventario.getInt(1);
+			//Insert del inventario e información de la partida a la base de datos
 			
-			//Insert del inventario a la base de datos
-			
-			String insertInventario = "INSERT INTO (id_inventario, num_peces, num_dadosesp, num_dadoslentos, num_dadosrapidos, num_bolasnieve, posicion_jugador, idpropietario, id_partida" + 
-			"VALUES (" + idInventario + ", 0, 0, 0, 0, 0, 0, " + pingu.getId() + ", " + idPartida + ")"; 
+			String insertInventario = "INSERT INTO inventario (id_inventario, num_peces, num_dadosesp, num_dadoslentos, num_dadosrapidos, num_bolasnieve, posicion_jugador, idpropietario, id_partida" + 
+			"VALUES (idInventarios.nextval, 0, 0, 0, 0, 0, 0, " + pingu.getId() + ", idPartidas.nextval)"; 
 			
 			bbdd.insert(con, insertInventario);
+			
+			String insertPartida = "INSERT INTO partida (idpartida, fecha, tablero, estado, idInvenatario, idCreador)"
+								+ "VALUES (idPartidas.currval, SYSDATE, " + casillasBD + ", 'en curso', idInventarios.currval" + pingu.getId() + ")";
+			
+			bbdd.insert(con, insertPartida);
+			
+			
+			//Carga de la ventana del tablero
 			
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/pantallaJuego.fxml"));
 			Parent pantallaJuegoRoot = loader.load();

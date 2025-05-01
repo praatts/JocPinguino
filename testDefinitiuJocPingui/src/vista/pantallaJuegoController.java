@@ -73,14 +73,13 @@ public class pantallaJuegoController {
 	private ArrayList<Evento> casillas;
 	private Pinguino pingu;
 
-	public void setPinguino(Pinguino pingu) {
-		this.pingu = pingu;
-	}
 
 	@FXML
 	private void initialize() {
 		// This method is called automatically after the FXML is loaded
 		// You can set initial values or add listeners here
+		
+		pingu = GuardarConBD.getPinguino();
 		eventos.setText("¡El juego ha comenzado!");
 		colocarIconos();
 

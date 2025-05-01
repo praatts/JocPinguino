@@ -94,7 +94,7 @@ public class pantallaPrincipalController {
             		String color = rs.getString("COLOR");
             		Inventario inventario = new Inventario(0, 0, 0, 0, 0);
                     Pinguino pingu = new Pinguino(nickname, color, id, 0, inventario, "Jugador");
-                    
+                    GuardarConBD.setPinguino(pingu);
                     //Carga la pantalla para seleccionar partida nueva, existente o cerrar/salir del juego
                     
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/pantallaMenu1.fxml"));

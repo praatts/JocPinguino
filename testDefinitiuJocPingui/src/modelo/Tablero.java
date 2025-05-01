@@ -11,7 +11,7 @@ public class Tablero {
 
 	public Tablero (int numeroCasillas) {
 	this.numeroCasillas = 50;
-	this.casillas = casillas;
+	this.casillas = new ArrayList<>();
 	}
 
 	public void setNumeroCasillas(String numeroCasillas){

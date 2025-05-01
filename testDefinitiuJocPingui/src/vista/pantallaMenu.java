@@ -47,11 +47,11 @@ public class pantallaMenu {
 			
 			Tablero tablero = new Tablero(50);
 			ArrayList<Evento> casillas = tablero.creacionTablero();
-			
+			System.out.println("Casillas creadas: " + casillas.size());
 			//Conversión compatible del tablero para la base de datos
 			StringBuilder casillasBD = new StringBuilder("ARRAYTAULELL(");
 			for (int i = 0; i < casillas.size(); i++) {
-				casillasBD.append("'").append(casillas.get(i).getInfoEvento()).append("0");
+				casillasBD.append("'").append(casillas.get(i).getInfoEvento()).append("'");
 				if (i < casillas.size() - 1) {
 					casillasBD.append(", ");
 				}
@@ -69,7 +69,7 @@ public class pantallaMenu {
 			bbdd.insert(con, insertInventario);
 			
 			String insertPartida = "INSERT INTO partida (idpartida, fecha, tablero, estado, idInvenatario, idCreador)"
-								+ "VALUES (idPartidas.currval, SYSDATE, " + casillasBD + ", 'en curso', idInventarios.currval" + pingu.getId() + ")";
+								+ "VALUES (idPartidas.currval, SYSDATE, " + casillasBD + ", 'en curso', idInventarios.currval, " + pingu.getId() + ")";
 			
 			bbdd.insert(con, insertPartida);
 			
@@ -79,7 +79,6 @@ public class pantallaMenu {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/pantallaJuego.fxml"));
 			Parent pantallaJuegoRoot = loader.load();
 			pantallaJuegoController controladorJuego = loader.getController();
-			controladorJuego.setPinguino(pingu);
 			Scene pantallaJuego = new Scene(pantallaJuegoRoot);
 			Stage stage = (Stage) ((Node) Event.getSource()).getScene().getWindow();
 			stage.setScene(pantallaJuego);

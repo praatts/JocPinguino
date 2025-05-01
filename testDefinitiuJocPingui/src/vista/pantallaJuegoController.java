@@ -81,9 +81,6 @@ public class pantallaJuegoController {
 	private void initialize() {
 		// This method is called automatically after the FXML is loaded
 		// You can set initial values or add listeners here
-		Tablero tablero = new Tablero(50);
-		casillas = tablero.creacionTablero();
-
 		eventos.setText("¡El juego ha comenzado!");
 		colocarIconos();
 

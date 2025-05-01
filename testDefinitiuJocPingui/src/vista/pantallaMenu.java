@@ -43,7 +43,21 @@ public class pantallaMenu {
 			
 			Connection con = GuardarConBD.getConexion();
 			
+			//Crear tablero y obtener casillas
 			
+			Tablero tablero = new Tablero(50);
+			ArrayList<Evento> casillas = tablero.creacionTablero();
+			
+			//Conversión compatible del tablero para la base de datos
+			String casillasBD = "ARRAYTAULELL(";
+			for (int i = 0; i < casillas.size(); i++) {
+				casillasBD += "'" + casillas.get(i).getInfoEvento() + "'";
+				if (i < casillas.size() - 1) {
+					casillasBD += ", ";
+				}
+			}
+			
+			casillasBD += ")";
 			
 			//Coger la id de la partida correspondiente de la secuencia.
 			ResultSet rs = bbdd.select(con, "SELECT idPartidas.nextval FROM dual");

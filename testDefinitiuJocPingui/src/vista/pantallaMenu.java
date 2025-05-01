@@ -40,15 +40,15 @@ public class pantallaMenu {
 	@FXML
 	public void handleNewGame(ActionEvent Event) {
 		try {
-			
+
 			Connection con = GuardarConBD.getConexion();
 			Pinguino pingu = GuardarConBD.getPinguino();
-			//Crear tablero y obtener casillas
-			
+			// Crear tablero y obtener casillas
+
 			Tablero tablero = new Tablero(50);
 			ArrayList<Evento> casillas = tablero.creacionTablero();
 			System.out.println("Casillas creadas: " + casillas.size());
-			//Conversión compatible del tablero para la base de datos
+			// Conversión compatible del tablero para la base de datos
 			StringBuilder casillasBD = new StringBuilder("ARRAYTAULELL(");
 			for (int i = 0; i < casillas.size(); i++) {
 				casillasBD.append("'").append(casillas.get(i).getInfoEvento()).append("'");
@@ -56,35 +56,46 @@ public class pantallaMenu {
 					casillasBD.append(", ");
 				}
 			}
-			
-			casillasBD.append(")");
-			
-			
-			
-			//Insert de inventario e información de la partida a la base de datos
-			
-			String insertPartida = "INSERT INTO partida (idpartida, fecha, tablero, estado, idInventario, idCreador) "
-			        + "VALUES (idPartidas.nextval, SYSDATE, " + casillasBD + ", 'en curso', NULL, " + pingu.getId() + ")";
 
+			casillasBD.append(")");
+
+			// Insert inventario + obtención de ID de la partida
+
+			String insertInventario = "INSERT INTO inventario (id_inventario, num_peces, num_dadosesp, num_dadoslentos, num_dadosrapidos, num_bolasnieve, posicion_jugador, idpropietario) "
+					+ "VALUES (idInventarios.nextval, 0, 0, 0, 0, 0, 0, " + pingu.getId() + ")";
+
+			bbdd.insert(con, insertInventario);
+			
+			int idInventario = 0;
+			ResultSet rsInv = bbdd.select(con, "SELECT idInventarios.currval FROM dual");
+			if (rsInv.next()) {
+				idInventario = rsInv.getInt(1);
+			}
+			rsInv.close();
+			
+			//Insert información de la partida + obtención de ID de la partida
+			
+			String insertPartida = "INSERT INTO partida (idpartida, fecha, tablero, estado, idInventario, idCreador) " +
+                    "VALUES (idPartidas.nextval, SYSDATE, " + casillasBD.toString() + ", 'en curso', " + idInventario + ", " + pingu.getId() + ")";
+			
 			bbdd.insert(con, insertPartida);
 			
-			
-			String selectID = "SELECT idPartidas.currval FROM dual";
-			ResultSet rs = bbdd.select(con, selectID);
 			int idPartida = 0;
-			if (rs.next()) {
-				idPartida = rs.getInt("currval");
+			ResultSet rsPartida = bbdd.select(con, "SELECT idPartidas.currval FROM dual");
+			if (rsPartida.next()) {
+				idPartida = rsPartida.getInt(1);
 			}
+			rsPartida.close();
 			
-			String insertInventario = "INSERT INTO inventario (id_inventario, num_peces, num_dadosesp, num_dadoslentos, num_dadosrapidos, num_bolasnieve, posicion_jugador, idpropietario, id_partida) "
-			        + "VALUES (idInventarios.nextval, 0, 0, 0, 0, 0, 0, " + pingu.getId() + ", " + idPartida + ")"; 
+			//Actualizar la tabla inventario con la id de la partida correspondiente
 			
-			bbdd.insert(con, insertInventario);
+			String actualizarInventario = "UPDATE inventario SET id_partida = " + idPartida + " WHERE id_inventario = " + idInventario;
+			bbdd.update(con, actualizarInventario);
+			
+			
+			
+			// Carga de la ventana del tablero
 
-		
-			
-			//Carga de la ventana del tablero
-			
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/pantallaJuego.fxml"));
 			Parent pantallaJuegoRoot = loader.load();
 			pantallaJuegoController controladorJuego = loader.getController();
@@ -93,7 +104,7 @@ public class pantallaMenu {
 			stage.setScene(pantallaJuego);
 			stage.setTitle("Pantalla del tablero");
 		} catch (Exception e) {
-			 e.printStackTrace();
+			e.printStackTrace();
 		}
 	}
 

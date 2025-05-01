@@ -13,7 +13,9 @@ import controlador.*;
 import java.util.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 public class pantallaJuegoController {
 
 	// Menu items
@@ -259,7 +261,7 @@ public class pantallaJuegoController {
 	}
 
 	@FXML
-	private void handleRapido() {
+	private void handleRapido(ActionEvent Event) {
 		Inventario inv = pingu.getInventario();
 		
 		if (inv.getDadosR() <= 0 ) {
@@ -284,7 +286,7 @@ public class pantallaJuegoController {
 	}
 
 	@FXML
-	private void handleLento() {
+	private void handleLento(ActionEvent Event) {
 		Inventario inv = pingu.getInventario();
 		
 		if (inv.getDadosL() <= 0 ) {
@@ -310,9 +312,17 @@ public class pantallaJuegoController {
 	
 
 	@FXML
-	private void handlePeces() {
-		System.out.println("Fish.");
-		// TODO
+	private void handleMostrarInventario(ActionEvent Event) {
+	    Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+	    alerta.setHeaderText(null);
+		alerta.setTitle("Inventario de " + pingu.getNombre());
+		alerta.setContentText("Dados especiales totales: " + pingu.getInventario().getDados() +
+				"\n -Dados lentos: " + pingu.getInventario().getDadosL() + 
+				"\n -Dados rápidos: " + pingu.getInventario().getDadosR() +
+				"\nBolas de nieve: " + pingu.getInventario().getBolasDeNieve() +
+				"\nPeces: " + pingu.getInventario().getPeces());
+		
+		alerta.showAndWait();
 	}
 
 	@FXML

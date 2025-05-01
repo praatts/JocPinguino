@@ -62,7 +62,7 @@ public class TipoCasilla extends Casilla {
 		} else {
 			System.out.println("No tienes suficientes peces para sobornar al oso. Has vuelto al inicio :(");
 			pingu.setPosicion(0);
-			alerta = new Alert(AlertType.INFORMATION,
+			alerta = new Alert(AlertType.WARNING,
 					"No tienes suficientes peces para sobornar al oso. Has vuelto al inicio :(", ButtonType.OK);
 			alerta.setTitle("Encuentro con el oso!");
 			alerta.setHeaderText(null);

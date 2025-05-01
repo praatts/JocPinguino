@@ -70,7 +70,6 @@ public class pantallaJuegoController {
 	// ONLY FOR TESTING!!!
 	private int p1Position = 0; // Tracks current position (from 0 to 49 in a 5x10 grid)
 	private final int COLUMNS = 5;
-	private ArrayList<Evento> casillas;
 	public Pinguino pingu;
 	public Tablero tablero;
 	
@@ -209,7 +208,7 @@ public class pantallaJuegoController {
 	}
 
 	private void administrarEventos(int posicion) {
-		Evento evento = casillas.get(posicion);
+		Evento evento = tablero.getCasillas().get(posicion);
 		TipoCasilla tipoCasilla = new TipoCasilla("vacío", 0);
 		switch (evento.getIDEvento()) {
 		case 2:
@@ -218,11 +217,11 @@ public class pantallaJuegoController {
 			break;
 		case 3:
 			tipoCasilla = new TipoCasilla("Agujero de Hielo", 3);
-			tipoCasilla.casillaAgujeroHielo(pingu, casillas, this);
+			tipoCasilla.casillaAgujeroHielo(pingu, tablero.getCasillas(), this);
 			break;
 		case 4:
 			tipoCasilla = new TipoCasilla("Trineo", 4);
-			tipoCasilla.casillaTrineo(pingu, casillas, this);
+			tipoCasilla.casillaTrineo(pingu, tablero.getCasillas(), this);
 			break;
 		case 5:
 			tipoCasilla = new TipoCasilla("Interrogante", 5);

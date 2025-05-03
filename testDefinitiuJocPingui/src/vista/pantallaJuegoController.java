@@ -10,6 +10,9 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import modelo.*;
 import controlador.*;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.util.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -194,6 +197,8 @@ public class pantallaJuegoController {
 			if (pingu.getPosicion() >= 50) {
 				pingu.setPosicion(49); // 5 columns * 10 rows = 50 cells (index 0 to 49)
 			}
+			
+			actualizarPosicionBaseDeDatos(pingu);
 		}
 
 		// Check row and column
@@ -322,10 +327,33 @@ public class pantallaJuegoController {
 		alerta.showAndWait();
 	}
 
-	@FXML
-	private void handleNieve() {
-		System.out.println("Snow.");
-		// TODO
+	private void actualizarPosicionBaseDeDatos(Pinguino pingu) {
+		try {
+			Connection con = GuardarConBD.getConexion();
+			con.setAutoCommit(false);
+			
+			//Buscar la id activa de la partida en curso
+			
+			String selectIDPartida = "SELECT i.id_partida FROM inventario i, partida p WHERE i.id_partida = p.idpartida AND "
+					+ "i.idpropietario = " + pingu.getId() + " AND estado = 'en curso'";
+			
+			ResultSet rs = bbdd.select(con, selectIDPartida);
+			if (rs.next()) {
+				int idPartida = rs.getInt("id_partida");
+				
+			//Actualizar posicion del jugador	
+				
+				String actualizarPosicion = "UPDATE inventario SET posicion_jugador = " + pingu.getPosicion()
+				+ " WHERE idpropietario = " + pingu.getId() + " AND id_partida = " + idPartida;
+				
+				bbdd.update(con, actualizarPosicion);
+				con.commit();
+				System.out.println("Posicion actualizada en la base de datos a: " + pingu.getPosicion());
+			}
+			
+		} catch (Exception e ) {
+			e.printStackTrace();
+		}
 	}
 
 	

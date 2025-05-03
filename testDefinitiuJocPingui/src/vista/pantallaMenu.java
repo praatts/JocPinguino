@@ -107,7 +107,7 @@ public class pantallaMenu {
 		alerta.setHeaderText(null);
 		alerta.setContentText("Se va a cerrar el juego, gracias por jugar!");
 		alerta.showAndWait();
-
+		
 		Platform.exit();
 	}
 

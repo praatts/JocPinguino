@@ -113,6 +113,8 @@ public class TipoCasilla extends Casilla {
 			if (agujeroAnteriorEncontrado && agujeroAnterior != 0) {
 				pingu.setPosicion(agujeroAnterior);
 				actualizarPosicionVisual.colocarPinguino(agujeroAnterior);
+				actualizarPosicionVisual.actualizarPosicionBaseDeDatos(pingu);
+
 			}
 		}
 	}
@@ -151,6 +153,7 @@ public class TipoCasilla extends Casilla {
 
 			pingu.setPosicion(trineoSiguiente);
 			actualizarPosicionVisual.colocarPinguino(trineoSiguiente);
+			actualizarPosicionVisual.actualizarPosicionBaseDeDatos(pingu);
 		} else if (trineoSiguiente == 0) {
 			System.out.println("No se ha encontrado ningún trineo posterior a este, no has avanzado ninguna casilla");
 

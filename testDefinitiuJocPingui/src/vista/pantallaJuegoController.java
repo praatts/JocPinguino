@@ -75,7 +75,7 @@ public class pantallaJuegoController {
 	private final int COLUMNS = 5;
 	public Pinguino pingu;
 	public Tablero tablero;
-	
+	private int idPartida = 0;
   
 	
 	
@@ -327,7 +327,7 @@ public class pantallaJuegoController {
 		alerta.showAndWait();
 	}
 
-	private void actualizarPosicionBaseDeDatos(Pinguino pingu) {
+	public void actualizarPosicionBaseDeDatos(Pinguino pingu) {
 		try {
 			Connection con = GuardarConBD.getConexion();
 			con.setAutoCommit(false);

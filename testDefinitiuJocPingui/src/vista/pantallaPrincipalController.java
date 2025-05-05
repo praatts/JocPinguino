@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -16,6 +17,8 @@ import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import java.sql.*;
 import java.util.ArrayList;
+import javafx.collections.FXCollections;
+
 
 import javax.naming.spi.DirStateFactory.Result;
 
@@ -31,17 +34,44 @@ public class pantallaPrincipalController {
 
     @FXML private TextField userField;
     @FXML private PasswordField passField;
-    @FXML private TextField colorField;
+    @FXML private ComboBox<String> colorField;
+    
     @FXML private Button loginButton;
     @FXML private Button registerButton;
     	  private Connection con;
+    	  
+    	  private Pinguino pingu;
+    	  private Tablero tablero;
+    	  ArrayList<Evento> casillas;
+    	  @FXML
+    	  public void initialize() {
+    	      colorField.setItems(FXCollections.observableArrayList(
+    	          "Amarillo", "Azul", "Morado", "Naranja", "Rojo", "Rosa", "Verde"
+    	      ));
 
-    @FXML
-    private void initialize() {
-        // This method is called automatically after the FXML is loaded
-        // You can set initial values or add listeners here
-        System.out.println("pantallaPrincipalController initialized");
-    }
+    	      colorField.setOnAction(event -> {
+    	          String selectedColor = colorField.getValue();
+    	          if (selectedColor != null) {
+    	              String cssColor = mapColorToCSS(selectedColor);
+    	              colorField.setStyle("-fx-background-color: " + cssColor + "; -fx-text-fill: white;");
+    	          }
+    	      });
+
+    	      System.out.println("pantallaPrincipalController initialized");
+    	  }
+
+    	  private String mapColorToCSS(String color) {
+    		    switch (color.toLowerCase()) {
+    		        case "amarillo": return "yellow";            
+    		        case "azul": return "#87CEFA";               
+    		        case "morado": return "#D8BFD8";             
+    		        case "naranja": return "orange";             
+    		        case "rojo": return "#F08080";               
+    		        case "rosa": return "pink";                  
+    		        case "verde": return "#90EE90";              
+    		        default: return "white";
+    		    }
+    		}
 
     @FXML
     private void handleNewGame() {
@@ -63,9 +93,13 @@ public class pantallaPrincipalController {
 
     @FXML
     private void handleQuitGame() {
-        System.out.println("Quit Game clicked");
-        // TODO
-        System.exit(0);
+       Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+       alerta.setTitle("Cierre del juego");
+       alerta.setHeaderText(null);
+       alerta.setContentText("Se va a cerrar el juego, gracias por jugar!");
+       alerta.showAndWait();
+       
+       Platform.exit();
     }
     
     @FXML
@@ -89,19 +123,25 @@ public class pantallaPrincipalController {
             		String color = rs.getString("COLOR");
             		Inventario inventario = new Inventario(0, 0, 0, 0, 0);
                     Pinguino pingu = new Pinguino(nickname, color, id, 0, inventario, "Jugador");
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/pantallaJuego.fxml"));
-                    Parent pantallaJuegoRoot = loader.load();
-                    pantallaJuegoController controladorJuego = loader.getController();
+                    GuardarConBD.setPinguino(pingu);
+                    //Carga la pantalla para seleccionar partida nueva, existente o cerrar/salir del juego
                     
-                    controladorJuego.setPinguino(pingu);
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/pantallaMenu1.fxml"));
+                    Parent pantallaMenuPartidasRoot = loader.load();
+                    
+                    //Carga del controlador del menú de partidas
+                    pantallaMenu controladorPartidas = loader.getController();
+                    controladorPartidas.mostrarNombreLogin(pingu);
                     
                     
-                    Scene pantallaJuegoScene = new Scene(pantallaJuegoRoot);
-
+            
+                    //Scene pantallaJuegoScene = new Scene(pantallaJuegoRoot);
+                    Scene pantallaMPartidasScene = new Scene(pantallaMenuPartidasRoot);
                     // Get the current stage using the event
                     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                    stage.setScene(pantallaJuegoScene);
-                    stage.setTitle("Pantalla de Juego");
+                    //stage.setScene(pantallaJuegoScene);
+                    stage.setScene(pantallaMPartidasScene);
+                    stage.setTitle("Pantalla de Selección de partida");
             	} else {
             		System.out.println("Usuario o contraseña incorrectos");
             		mostrarAlerta("Error", "El usuario o contraseña son incorrectos");
@@ -120,7 +160,7 @@ public class pantallaPrincipalController {
     private void handleRegister(ActionEvent event) {
         String usuario = userField.getText();
         String contrasenya = passField.getText();
-        String color = colorField.getText();
+        String color = colorField.getValue();
         
         if (!usuario.isEmpty() && !contrasenya.isEmpty() && !color.isEmpty()) {
         	try {

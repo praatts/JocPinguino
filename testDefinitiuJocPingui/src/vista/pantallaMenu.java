@@ -25,16 +25,63 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class pantallaMenu {
 
 	@FXML
 	private Text bienvenidoTexto;
 	private Pinguino pingu;
-
 	@FXML
 	public void mostrarNombreLogin(Pinguino p) {
 		bienvenidoTexto.setText("¡Bienvenido, " + p.getNombre() + "!");
+	}
+
+	@FXML
+	public void handleLoadGame(ActionEvent Event) {
+		try {
+			Connection con = GuardarConBD.getConexion();
+			Pinguino pingu = GuardarConBD.getPinguino();
+
+			String sqlConsulta = "SELECT idPartida FROM partida WHERE estado = 'en curso' AND idcreador = "
+					+ pingu.getId() + " ORDER BY idPartida ASC";
+			ResultSet rs = bbdd.select(con, sqlConsulta);
+			
+			List<Integer> partidasJugador = new ArrayList<>();
+			
+			while (rs.next()) {
+				int id = rs.getInt("idPartida");
+				partidasJugador.add(id);
+			}
+			rs.close();
+			
+			if(partidasJugador.isEmpty()) {
+				Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+				alerta.setTitle("No hay partidas");
+				alerta.setHeaderText(null);
+				alerta.setContentText("No tienes ninguna partida almacenada que se encuentre en curso");
+				alerta.showAndWait();
+			} else {
+				ChoiceDialog<Integer> seleccionarPartida = new ChoiceDialog <>(partidasJugador.get(0), partidasJugador);
+				seleccionarPartida.setTitle("Seleccionar partida en curso");
+				seleccionarPartida.setHeaderText(null);
+				seleccionarPartida.setContentText("ID Partida: ");
+				
+				Optional<Integer> partidaACargar = seleccionarPartida.showAndWait();	
+				if (partidaACargar.isPresent()) {
+					int idSeleccionada = partidaACargar.get();
+					
+					System.out.println("ID de la partida a cargar: " + idSeleccionada);
+				}
+				
+			}
+			
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@FXML
@@ -82,7 +129,7 @@ public class pantallaMenu {
 			bbdd.insert(con, insertPartida);
 			System.out.println("SQL: " + insertPartida);
 			con.commit();
-			
+
 			int idPartida = 0;
 			ResultSet rsPartida = bbdd.select(con, "SELECT idPartidas.currval FROM dual");
 			if (rsPartida.next()) {

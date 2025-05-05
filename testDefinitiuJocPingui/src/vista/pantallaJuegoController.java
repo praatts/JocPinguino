@@ -10,12 +10,16 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import modelo.*;
 import controlador.*;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.util.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.application.Platform;
 public class pantallaJuegoController {
 
 	// Menu items
@@ -56,7 +60,7 @@ public class pantallaJuegoController {
 
 	// Game board and player pieces
 	@FXML
-	private GridPane tablero;
+	private GridPane gridPaneTablero;
 	@FXML
 	private Circle P1;
 	@FXML
@@ -69,31 +73,45 @@ public class pantallaJuegoController {
 	// ONLY FOR TESTING!!!
 	private int p1Position = 0; // Tracks current position (from 0 to 49 in a 5x10 grid)
 	private final int COLUMNS = 5;
-	private ArrayList<Evento> casillas;
-	private Pinguino pingu;
-
-	public void setPinguino(Pinguino pingu) {
-		this.pingu = pingu;
-	}
-
+	public Pinguino pingu;
+	public Tablero tablero;
+	public int idPartida;
+  
+	
+	
 	@FXML
 	private void initialize() {
 		// This method is called automatically after the FXML is loaded
 		// You can set initial values or add listeners here
-		Tablero tablero = new Tablero(50);
-		casillas = tablero.creacionTablero();
-
-		eventos.setText("¡El juego ha comenzado!");
-		colocarIconos();
+		
 
 	}
 
-	private void colocarIconos() {
+	private int ultimaIDPartida () {
+		
+		try {
+		Connection con = GuardarConBD.getConexion();
+		String sql = "SELECT MAX(idPartida) FROM  partida";
+		
+		ResultSet rs = bbdd.select(con, sql);
+		
+		if (rs.next()) {
+			idPartida = rs.getInt(1);
+		}
+		rs.close();
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	return idPartida;	
+	}
+	
+	public void colocarIconos() {
 		Evento evento = null;
 		int fila = 0;
 		int columna = 0;
-		for (int i = 0; i < casillas.size(); i++) {
-			evento = casillas.get(i);
+		for (int i = 0; i < tablero.getCasillas().size(); i++) {
+			evento = tablero.getCasillas().get(i);
 
 			fila = i / COLUMNS;
 			columna = i % COLUMNS;
@@ -135,7 +153,7 @@ public class pantallaJuegoController {
 				GridPane.setColumnIndex(iconoEvento, columna);
 				GridPane.setHalignment(iconoEvento, HPos.CENTER);
 				GridPane.setValignment(iconoEvento, VPos.CENTER);
-				tablero.getChildren().add(iconoEvento);
+				gridPaneTablero.getChildren().add(iconoEvento);
 			}
 		}
 	}
@@ -153,8 +171,8 @@ public class pantallaJuegoController {
 
 	@FXML
 	private void handleNewGame() {
-		System.out.println("New game.");
-		// TODO
+		
+		
 	}
 
 	@FXML
@@ -171,8 +189,13 @@ public class pantallaJuegoController {
 
 	@FXML
 	private void handleQuitGame() {
-		System.out.println("Exit...");
-		// TODO
+		Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+		alerta.setTitle("Juego cerrado");
+		alerta.setHeaderText(null);
+		alerta.setContentText("Se ha cerrado el juego, gracias por jugar!");
+		
+		alerta.showAndWait();
+		Platform.exit();
 	}
 
 	@FXML
@@ -197,6 +220,8 @@ public class pantallaJuegoController {
 				pingu.setPosicion(49); // 5 columns * 10 rows = 50 cells (index 0 to 49)
 			tipoCasilla.lineaDeMeta(pingu);
 			}
+			
+			actualizarPosicionBaseDeDatos(pingu, idPartida);
 		}
 
 		// Check row and column
@@ -211,7 +236,7 @@ public class pantallaJuegoController {
 	}
 
 	private void administrarEventos(int posicion) {
-		Evento evento = casillas.get(posicion);
+		Evento evento = tablero.getCasillas().get(posicion);
 		TipoCasilla tipoCasilla = new TipoCasilla("vacío", 0);
 		switch (evento.getIDEvento()) {
 		case 2:
@@ -220,11 +245,11 @@ public class pantallaJuegoController {
 			break;
 		case 3:
 			tipoCasilla = new TipoCasilla("Agujero de Hielo", 3);
-			tipoCasilla.casillaAgujeroHielo(pingu, casillas, this);
+			tipoCasilla.casillaAgujeroHielo(pingu, tablero.getCasillas(), this);
 			break;
 		case 4:
 			tipoCasilla = new TipoCasilla("Trineo", 4);
-			tipoCasilla.casillaTrineo(pingu, casillas, this);
+			tipoCasilla.casillaTrineo(pingu, tablero.getCasillas(), this);
 			break;
 		case 5:
 			tipoCasilla = new TipoCasilla("Interrogante", 5);
@@ -325,9 +350,33 @@ public class pantallaJuegoController {
 		alerta.showAndWait();
 	}
 
-	@FXML
-	private void handleNieve() {
-		System.out.println("Snow.");
-		// TODO
+	public void actualizarPosicionBaseDeDatos(Pinguino pingu, int idPartida) {
+		try {
+			Connection con = GuardarConBD.getConexion();
+			con.setAutoCommit(false);
+			idPartida = ultimaIDPartida();
+			//Buscar la id activa de la partida en curso
+			
+			String selectIDPartida = "SELECT i.id_partida FROM inventario i, partida p WHERE i.id_partida = " + idPartida + " AND estado = 'en curso'";
+			System.out.println(pingu.getId());
+			
+			//Actualizar posicion del jugador	
+				
+				String actualizarPosicion = "UPDATE inventario SET posicion_jugador = " + pingu.getPosicion()
+				+ " WHERE idpropietario = " + pingu.getId() + " AND id_partida = " + idPartida;
+				
+				bbdd.update(con, actualizarPosicion);
+				con.commit();
+				System.out.println("Posicion actualizada en la base de datos a: " + pingu.getPosicion());
+				
+			
+			System.out.println("ID Partida: " + idPartida);
+			
+			
+		} catch (Exception e ) {
+			e.printStackTrace();
+		}
 	}
+
+	
 }

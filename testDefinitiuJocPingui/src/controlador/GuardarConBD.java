@@ -1,6 +1,5 @@
 package controlador;
 import java.sql.Connection;
-
 import modelo.Pinguino;
 public class GuardarConBD {
 	private static Connection conexion;
@@ -20,4 +19,5 @@ public class GuardarConBD {
 	public static void setPinguino(Pinguino pingu) {
 		pinguino = pingu;
 	}
+
 }

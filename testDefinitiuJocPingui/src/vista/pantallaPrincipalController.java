@@ -19,6 +19,8 @@ import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import java.sql.*;
 import java.util.ArrayList;
+import javafx.collections.FXCollections;
+
 
 import javax.naming.spi.DirStateFactory.Result;
 
@@ -38,41 +40,39 @@ public class pantallaPrincipalController {
     @FXML private Button loginButton;
     @FXML private Button registerButton;
     	  private Connection con;
+    	  
     	  private Pinguino pingu;
     	  private Tablero tablero;
     	  ArrayList<Evento> casillas;
-    @FXML
-    private void initialize() {
-        // This method is called automatically after the FXML is loaded
-        // You can set initial values or add listeners here
-    	 colorField.setItems(FXCollections.observableArrayList(
-   	          "Amarillo", "Azul", "Morado", "Naranja", "Rojo", "Rosa", "Verde"
-   	      ));
+    	  @FXML
+    	  public void initialize() {
+    	      colorField.setItems(FXCollections.observableArrayList(
+    	          "Amarillo", "Azul", "Morado", "Naranja", "Rojo", "Rosa", "Verde"
+    	      ));
 
-   	      colorField.setOnAction(event -> {
-   	          String selectedColor = colorField.getValue();
-   	          if (selectedColor != null) {
-   	              String cssColor = mapColorToCSS(selectedColor);
-   	              colorField.setStyle("-fx-background-color: " + cssColor + "; -fx-text-fill: white;");
-   	          }
-   	      });
-        System.out.println("pantallaPrincipalController initialized");
-        
-    }
-    
-    private String mapColorToCSS(String color) {
-	    switch (color.toLowerCase()) {
-	        case "amarillo": return "yellow";            
-	        case "azul": return "#87CEFA";               
-	        case "morado": return "#D8BFD8";             
-	        case "naranja": return "orange";             
-	        case "rojo": return "#F08080";               
-	        case "rosa": return "pink";                  
-	        case "verde": return "#90EE90";              
-	        default: return "white";
-	    }
-	}
+    	      colorField.setOnAction(event -> {
+    	          String selectedColor = colorField.getValue();
+    	          if (selectedColor != null) {
+    	              String cssColor = mapColorToCSS(selectedColor);
+    	              colorField.setStyle("-fx-background-color: " + cssColor + "; -fx-text-fill: white;");
+    	          }
+    	      });
 
+    	      System.out.println("pantallaPrincipalController initialized");
+    	  }
+
+    	  private String mapColorToCSS(String color) {
+    		    switch (color.toLowerCase()) {
+    		        case "amarillo": return "yellow";            
+    		        case "azul": return "#87CEFA";               
+    		        case "morado": return "#D8BFD8";             
+    		        case "naranja": return "orange";             
+    		        case "rojo": return "#F08080";               
+    		        case "rosa": return "pink";                  
+    		        case "verde": return "#90EE90";              
+    		        default: return "white";
+    		    }
+    		}
 
     @FXML
     private void handleNewGame() {

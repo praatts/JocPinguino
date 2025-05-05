@@ -21,7 +21,6 @@ public class main extends Application {
 	    primaryStage.setTitle("El Juego del Pingüino");
 	    primaryStage.show();
 	}
-
     public static void main(String[] args) {
         launch(args);
     }

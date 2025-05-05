@@ -81,9 +81,10 @@ public class Tablero {
 				casillasVacias++;
 				}
 			break;	
-			}
-
 			
+			
+			}
+		
 			if (evt != null) {
 				casillas.add(evt);
 			}
@@ -92,4 +93,6 @@ public class Tablero {
 		casillas.add(new Evento(10, "Línea de meta"));
 		return casillas;
 	}
+
+	
 }

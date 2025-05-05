@@ -38,18 +38,19 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vista.pantallaMenu" alignment="CENTER" spacing="30.0" prefHeight="350">
-  
-      
+
+<VBox prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vista.pantallaMenu" alignment="CENTER" spacing="30.0" prefHeight="350" style="-fx-background-color: #ADD8E6;">
 
     <children>
-        <Text fx:id="bienvenidoTexto" text="¡Bienvenido!" fill="#2e7d32">
+        <Text fx:id="bienvenidoTexto" text="¡Bienvenido!" fill="#1E90FF">
             <font>
                 <Font name="Arial Bold" size="30.0" />
             </font>
         </Text>
 
-        <Text text="¿Qué desea realizar?" fill="#424242">
+
+        <Text text="¿Qué desea realizar?" fill="#4682B4">
+
             <font>
                 <Font name="Arial" size="20.0" />
             </font>
@@ -58,15 +59,14 @@
         <VBox spacing="15.0" alignment="CENTER">
             <children>
                <Button fx:id="nuevaPartidaButton" text="CREAR PARTIDA NUEVA"
-        		style="-fx-background-color: #4caf50; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20;" 
-			    onAction="#handleNewGame"/>
+                style="-fx-background-color: #5F9EA0; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20;" 
+                onAction="#handleNewGame"/>
 
                 <Button fx:id="partidaExistenteButton" text="CARGAR PARTIDA EXISTENTE"
-                        style="-fx-background-color: #1976d2; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20;"
-                        onAction="#handleLoadGame"/>
+                        style="-fx-background-color: #5F9EA0; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20;"/>
 
                 <Button fx:id="cerrarSesionButton" text="CERRAR SESIÓN / SALIR"
-                        style="-fx-background-color: #b71c1c; -fx-text-fill: white; -fx-font-size: 13px; -fx-padding: 8 20;" onAction="#handleQuitGame"/>
+                        style="-fx-background-color: #5F9EA0; -fx-text-fill: white; -fx-font-size: 13px; -fx-padding: 8 20;" onAction="#handleQuitGame"/>
             </children>
         </VBox>
     </children>

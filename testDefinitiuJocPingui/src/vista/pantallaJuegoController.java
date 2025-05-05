@@ -71,17 +71,6 @@ public class pantallaJuegoController {
 		@FXML
 		private Circle P4;
 
-	// Game board and player pieces
-	@FXML
-	private GridPane gridPaneTablero;
-	@FXML
-	private Circle P1;
-	@FXML
-	private Circle P2;
-	@FXML
-	private Circle P3;
-	@FXML
-	private Circle P4;
 
 	// ONLY FOR TESTING!!!
 	private int p1Position = 0; // Tracks current position (from 0 to 49 in a 5x10 grid)
@@ -235,7 +224,7 @@ public class pantallaJuegoController {
 					pingu.setPosicion(49); // 5 columns * 10 rows = 50 cells (index 0 to 49)
 				}
 				
-				actualizarPosicionBaseDeDatos(pingu);
+				actualizarPosicionBaseDeDatos(pingu, idPartida);
 			}
 
 			// Check row and column

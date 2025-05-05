@@ -75,7 +75,7 @@ public class pantallaJuegoController {
 	private final int COLUMNS = 5;
 	public Pinguino pingu;
 	public Tablero tablero;
-	private int idPartida = 0;
+	public int idPartida;
   
 	
 	
@@ -87,6 +87,25 @@ public class pantallaJuegoController {
 
 	}
 
+	private int ultimaIDPartida () {
+		
+		try {
+		Connection con = GuardarConBD.getConexion();
+		String sql = "SELECT MAX(idPartida) FROM  partida";
+		
+		ResultSet rs = bbdd.select(con, sql);
+		
+		if (rs.next()) {
+			idPartida = rs.getInt(1);
+		}
+		rs.close();
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	return idPartida;	
+	}
+	
 	public void colocarIconos() {
 		Evento evento = null;
 		int fila = 0;
@@ -198,7 +217,7 @@ public class pantallaJuegoController {
 				pingu.setPosicion(49); // 5 columns * 10 rows = 50 cells (index 0 to 49)
 			}
 			
-			actualizarPosicionBaseDeDatos(pingu);
+			actualizarPosicionBaseDeDatos(pingu, idPartida);
 		}
 
 		// Check row and column
@@ -327,20 +346,16 @@ public class pantallaJuegoController {
 		alerta.showAndWait();
 	}
 
-	public void actualizarPosicionBaseDeDatos(Pinguino pingu) {
+	public void actualizarPosicionBaseDeDatos(Pinguino pingu, int idPartida) {
 		try {
 			Connection con = GuardarConBD.getConexion();
 			con.setAutoCommit(false);
-			
+			idPartida = ultimaIDPartida();
 			//Buscar la id activa de la partida en curso
 			
-			String selectIDPartida = "SELECT i.id_partida FROM inventario i, partida p WHERE i.id_partida = p.idpartida AND "
-					+ "i.idpropietario = " + pingu.getId() + " AND estado = 'en curso'";
+			String selectIDPartida = "SELECT i.id_partida FROM inventario i, partida p WHERE i.id_partida = " + idPartida + " AND estado = 'en curso'";
+			System.out.println(pingu.getId());
 			
-			ResultSet rs = bbdd.select(con, selectIDPartida);
-			if (rs.next()) {
-				int idPartida = rs.getInt("id_partida");
-				
 			//Actualizar posicion del jugador	
 				
 				String actualizarPosicion = "UPDATE inventario SET posicion_jugador = " + pingu.getPosicion()
@@ -349,7 +364,10 @@ public class pantallaJuegoController {
 				bbdd.update(con, actualizarPosicion);
 				con.commit();
 				System.out.println("Posicion actualizada en la base de datos a: " + pingu.getPosicion());
-			}
+				
+			
+			System.out.println("ID Partida: " + idPartida);
+			
 			
 		} catch (Exception e ) {
 			e.printStackTrace();

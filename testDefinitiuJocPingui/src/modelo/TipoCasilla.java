@@ -5,6 +5,7 @@ import java.util.*;
 import java.util.ArrayList;
 import java.util.Random;
 import controlador.*;
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
 
 import javafx.scene.control.Alert.AlertType;
@@ -61,7 +62,7 @@ public class TipoCasilla extends Casilla {
 		} else {
 			System.out.println("No tienes suficientes peces para sobornar al oso. Has vuelto al inicio :(");
 			pingu.setPosicion(0);
-			alerta = new Alert(AlertType.INFORMATION,
+			alerta = new Alert(AlertType.WARNING,
 					"No tienes suficientes peces para sobornar al oso. Has vuelto al inicio :(", ButtonType.OK);
 			alerta.setTitle("Encuentro con el oso!");
 			alerta.setHeaderText(null);
@@ -113,6 +114,8 @@ public class TipoCasilla extends Casilla {
 			if (agujeroAnteriorEncontrado && agujeroAnterior != 0) {
 				pingu.setPosicion(agujeroAnterior);
 				actualizarPosicionVisual.colocarPinguino(agujeroAnterior);
+				actualizarPosicionVisual.actualizarPosicionBaseDeDatos(pingu, actualizarPosicionVisual.idPartida);
+
 			}
 		}
 	}
@@ -151,6 +154,7 @@ public class TipoCasilla extends Casilla {
 
 			pingu.setPosicion(trineoSiguiente);
 			actualizarPosicionVisual.colocarPinguino(trineoSiguiente);
+			actualizarPosicionVisual.actualizarPosicionBaseDeDatos(pingu, actualizarPosicionVisual.idPartida);
 		} else if (trineoSiguiente == 0) {
 			System.out.println("No se ha encontrado ningún trineo posterior a este, no has avanzado ninguna casilla");
 
@@ -293,18 +297,15 @@ public class TipoCasilla extends Casilla {
 					+ pingu.getInventario().getDados());
 			alerta.showAndWait();
 		}
-
 	}
-
+	
 	public void lineaDeMeta(Pinguino pingu) {
-
-		if (pingu.getPosicion() == 49) {
-			Alert alerta = new Alert(AlertType.CONFIRMATION);
-			alerta.setTitle("Ganador");
-			alerta.setHeaderText(null);
-			alerta.setContentText(pingu.getNombre() + " ha ganado!");
-			alerta.showAndWait();
-		}
-	}
-
+        if (pingu.getPosicion() == 49) {
+            Alert alerta = new Alert(AlertType.INFORMATION);
+            alerta.setTitle("Ganador");
+            alerta.setHeaderText(null);
+            alerta.setContentText(pingu.getNombre() + " ha ganado!");
+            alerta.showAndWait();
+        }
+    }
 }

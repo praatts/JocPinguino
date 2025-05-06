@@ -122,10 +122,7 @@ public class Pinguino {
 	}
 
 	public void avanzarConDado(Pinguino pingu, Dado dado) {
-
-		pingu.setPosicion(getPosicion() + dado.getValorDado());
-		System.out.println("Has avanzado " + dado.getValorDado() + " casillas!");
-
+	    pingu.setPosicion(pingu.getPosicion() + dado.getValorDado()); // correccion
+	    System.out.println("Has avanzado " + dado.getValorDado() + " casillas!");
 	}
-
 }

@@ -1,6 +1,7 @@
 package vista;
 
-import javafx.fxml.FXML; 
+import javafx.application.Platform;
+import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -13,11 +14,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import java.sql.*;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
+
 
 import javax.naming.spi.DirStateFactory.Result;
 
@@ -34,12 +37,13 @@ public class pantallaPrincipalController {
     @FXML private TextField userField;
     @FXML private PasswordField passField;
     @FXML private ComboBox<String> colorField;
-
     @FXML private Button loginButton;
     @FXML private Button registerButton;
     	  private Connection con;
-
     	  
+    	  private Pinguino pingu;
+    	  private Tablero tablero;
+    	  ArrayList<Evento> casillas;
     	  @FXML
     	  public void initialize() {
     	      colorField.setItems(FXCollections.observableArrayList(
@@ -69,6 +73,7 @@ public class pantallaPrincipalController {
     		        default: return "white";
     		    }
     		}
+
     @FXML
     private void handleNewGame() {
         System.out.println("New Game clicked");
@@ -89,9 +94,13 @@ public class pantallaPrincipalController {
 
     @FXML
     private void handleQuitGame() {
-        System.out.println("Quit Game clicked");
-        // TODO
-        System.exit(0);
+       Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+       alerta.setTitle("Cierre del juego");
+       alerta.setHeaderText(null);
+       alerta.setContentText("Se va a cerrar el juego, gracias por jugar!");
+       alerta.showAndWait();
+       
+       Platform.exit();
     }
     
     @FXML
@@ -115,19 +124,25 @@ public class pantallaPrincipalController {
             		String color = rs.getString("COLOR");
             		Inventario inventario = new Inventario(0, 0, 0, 0, 0);
                     Pinguino pingu = new Pinguino(nickname, color, id, 0, inventario, "Jugador");
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/pantallaJuego.fxml"));
-                    Parent pantallaJuegoRoot = loader.load();
-                    pantallaJuegoController controladorJuego = loader.getController();
+                    GuardarConBD.setPinguino(pingu);
+                    //Carga la pantalla para seleccionar partida nueva, existente o cerrar/salir del juego
                     
-                    controladorJuego.setPinguino(pingu);
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/pantallaMenu1.fxml"));
+                    Parent pantallaMenuPartidasRoot = loader.load();
+                    
+                    //Carga del controlador del menú de partidas
+                    pantallaMenu controladorPartidas = loader.getController();
+                    controladorPartidas.mostrarNombreLogin(pingu);
                     
                     
-                    Scene pantallaJuegoScene = new Scene(pantallaJuegoRoot);
-
+            
+                    //Scene pantallaJuegoScene = new Scene(pantallaJuegoRoot);
+                    Scene pantallaMPartidasScene = new Scene(pantallaMenuPartidasRoot);
                     // Get the current stage using the event
                     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                    stage.setScene(pantallaJuegoScene);
-                    stage.setTitle("Pantalla de Juego");
+                    //stage.setScene(pantallaJuegoScene);
+                    stage.setScene(pantallaMPartidasScene);
+                    stage.setTitle("Pantalla de Selección de partida");
             	} else {
             		System.out.println("Usuario o contraseña incorrectos");
             		mostrarAlerta("Error", "El usuario o contraseña son incorrectos");

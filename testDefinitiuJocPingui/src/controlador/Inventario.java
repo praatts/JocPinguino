@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Inventario {
 
-
+	private int idInventario;
 	private int dados;
 	private int dadosR;
 	private int dadosL;
@@ -14,13 +14,23 @@ public class Inventario {
 
 	Random r = new Random();
 
-	public Inventario(int dados, int dadosR, int dadosL, int peces, int bolasDeNieve) {
+	public Inventario(int idInventario, int dados, int dadosR, int dadosL, int peces, int bolasDeNieve) {
+		this.idInventario = idInventario;
 		this.dados = dados;
 		this.dadosR = dadosR;
 		this.dadosL = dadosL;
-
 		this.peces = peces;
 		this.bolasDeNieve = bolasDeNieve;
+	}
+
+	
+	public int getIdInventario() {
+		return idInventario;
+	}
+
+
+	public void setIdInventario(int idInventario) {
+		this.idInventario = idInventario;
 	}
 
 

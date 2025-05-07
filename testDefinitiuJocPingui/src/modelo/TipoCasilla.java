@@ -1,6 +1,7 @@
 
 package modelo;
 
+import java.sql.Connection;
 import java.util.*;
 import java.util.ArrayList;
 import java.util.Random;
@@ -207,6 +208,15 @@ public class TipoCasilla extends Casilla {
 		int pecesJugador = pingu.getInventario().getPeces();
 
 		if (pecesJugador < 2) {
+			
+			try {
+				Connection con = GuardarConBD.getConexion();
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				String consulta = "UPDATE INVENTARIO SET NUM_PECES = " + (pecesJugador + 1) + 
+						"WHERE ID_INVENTARIO = " + pingu.getInventario(); 
+			}
 			pingu.getInventario().setPeces(pecesJugador + 1);
 
 			alerta = new Alert(AlertType.INFORMATION);

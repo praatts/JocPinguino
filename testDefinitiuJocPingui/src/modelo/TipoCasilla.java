@@ -311,10 +311,12 @@ public class TipoCasilla extends Casilla {
 					"No se ha podido añadir el dado al inventario, ya posees el máximo de dados especiales permitidos.");
 			alerta.showAndWait();
 		} else {
-			if (probabilidad <= 3) {
-				try {
 
-					Connection con = GuardarConBD.getConexion();
+			try {
+
+				Connection con = GuardarConBD.getConexion();
+				if (probabilidad <= 3) {
+
 					System.out.println("Jugador " + pingu.getNombre() + " ha obtenido un dado rápido");
 					pingu.getInventario().setDadosR(pingu.getInventario().getDadosR() + 1);
 					tipoDado = "dado rápido";
@@ -322,33 +324,26 @@ public class TipoCasilla extends Casilla {
 					String sqlUpdateRapidos = "UPDATE INVENTARIO SET NUM_DADOSRAPIDOS = " + (nDadosRapidos + 1)
 							+ " WHERE idPropietario = " + pingu.getId() + " AND id_partida = " + idPartida;
 					bbdd.update(con, sqlUpdateRapidos);
+					pingu.getInventario().setDadosR(nDadosRapidos + 1);
 					con.commit();
 
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			} else {
-				try {
-					Connection con = GuardarConBD.getConexion();
+				} else {
+
 					System.out.println("Jugador " + pingu.getNombre() + " ha obtenido un dado lento");
-					pingu.getInventario().setDadosL(pingu.getInventario().getDadosL() + 1);
 					tipoDado = "dado lento";
 
 					String sqlUpdateLentos = "UPDATE INVENTARIO SET NUM_DADOSLENTOS = " + (nDadosLentos + 1)
 							+ " WHERE idPropietario = " + pingu.getId() + " AND id_partida = " + idPartida;
 					bbdd.update(con, sqlUpdateLentos);
+					pingu.getInventario().setDadosL(nDadosLentos + 1);
 					con.commit();
 
-				} catch (Exception e) {
-					e.printStackTrace();
 				}
-			}
 
-			try {
-				Connection con = GuardarConBD.getConexion();
 				String sqlUpdate = "UPDATE INVENTARIO SET NUM_DADOSESP = " + (nDados + 1) + " WHERE idPropietario = "
 						+ pingu.getId() + " AND id_partida = " + idPartida;
 				bbdd.update(con, sqlUpdate);
+				pingu.getInventario().setDados(nDados + 1);
 				con.commit();
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -372,21 +367,21 @@ public class TipoCasilla extends Casilla {
 		try {
 			Connection con = GuardarConBD.getConexion();
 			if (pingu.getPosicion() == 49) {
-				
-				String sqlUpdate = "UPDATE partida SET estado = 'finalizada' WHERE idPartida = " + idPartida + " AND idCreador = " + pingu.getId();
+
+				String sqlUpdate = "UPDATE partida SET estado = 'finalizada' WHERE idPartida = " + idPartida
+						+ " AND idCreador = " + pingu.getId();
 				bbdd.update(con, sqlUpdate);
 				con.commit();
-				
+
 				Alert alerta = new Alert(AlertType.INFORMATION);
 				alerta.setTitle("Ganador");
 				alerta.setHeaderText(null);
-				alerta.setContentText(pingu.getNombre() + " ha ganado!\n\nPulse en el desplegable superior izquierdo para cargar otra partida o cerrar el juego");
+				alerta.setContentText(pingu.getNombre()
+						+ " ha ganado!\n\nPulse en el desplegable superior izquierdo para cargar otra partida o cerrar el juego");
 				alerta.showAndWait();
-				
-				
-				
+
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

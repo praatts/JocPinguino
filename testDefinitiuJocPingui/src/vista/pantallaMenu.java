@@ -40,6 +40,7 @@ public class pantallaMenu {
 	@FXML
 
 	public void handleLoadGame(ActionEvent Event) {
+		pantallaJuegoController ctrl = new pantallaJuegoController();
 		try {
 			Connection con = GuardarConBD.getConexion();
 			Pinguino pingu = GuardarConBD.getPinguino();
@@ -91,7 +92,7 @@ public class pantallaMenu {
 						Inventario inv = new Inventario(idInv, nPeces, nDados, nDadosL, nDadosR, nBolasNieve);
 						pingu.setInventario(inv);
 						pingu.setPosicion(posicion);
-
+						
 					}
 
 					rsInv.close();

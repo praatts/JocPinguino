@@ -90,7 +90,7 @@ public class Tablero {
 			}
 			
 		}
-		casillas.add(new Evento(10, "Línea de meta"));
+		casillas.add(new Evento(9, "Línea de meta"));
 		return casillas;
 	}
 

@@ -215,6 +215,7 @@ public class TipoCasilla extends Casilla {
 						+ pingu.getId() + " AND id_partida = " + idPartida;
 
 				bbdd.update(con, sqlUpdate);
+				con.commit();
 				pingu.getInventario().setPeces(pecesJugador + 1);
 
 				alerta = new Alert(AlertType.INFORMATION);
@@ -266,23 +267,25 @@ public class TipoCasilla extends Casilla {
 			bbdd.update(con, sqlUpdate);
 			con.commit();
 			pingu.getInventario().setBolasDeNieve(bolasTotales);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		 Alert alerta = new Alert(AlertType.INFORMATION);
-		    alerta.setTitle("Bolas de Nieve");
-		    alerta.setHeaderText(null);
+		Alert alerta = new Alert(AlertType.INFORMATION);
+		alerta.setTitle("Bolas de Nieve");
+		alerta.setHeaderText(null);
 
-		    if (bolasJugador >= 6) {
-		        alerta.setAlertType(AlertType.WARNING);
-		        alerta.setContentText("Ya tienes el máximo número de bolas de nieve permitidas, no se ha añadido ninguna bola de nieve al inventario.");
-		    } else {
-		        alerta.setContentText("Has conseguido " + generador + " bolas de nieve.\nAhora tienes " + bolasTotales + " en el inventario.");
-		    }
+		if (bolasJugador >= 6) {
+			alerta.setAlertType(AlertType.WARNING);
+			alerta.setContentText(
+					"Ya tienes el máximo número de bolas de nieve permitidas, no se ha añadido ninguna bola de nieve al inventario.");
+		} else {
+			alerta.setContentText("Has conseguido " + generador + " bolas de nieve.\nAhora tienes " + bolasTotales
+					+ " en el inventario.");
+		}
 
-		    alerta.showAndWait();
+		alerta.showAndWait();
 
 	}
 
@@ -292,6 +295,10 @@ public class TipoCasilla extends Casilla {
 	public void obtenerDadoAleatorio(Pinguino pingu) {
 		Random r = new Random();
 		Alert alerta = null;
+		int idPartida = GuardarConBD.getIdPartidaCargada();
+		int nDadosLentos = pingu.getInventario().getDadosL();
+		int nDadosRapidos = pingu.getInventario().getDadosR();
+		int nDados = pingu.getInventario().getDados();
 		int probabilidad = r.nextInt(10) + 1;
 		String tipoDado = "";
 		if (pingu.getInventario().getDados() >= 3) {
@@ -305,14 +312,46 @@ public class TipoCasilla extends Casilla {
 			alerta.showAndWait();
 		} else {
 			if (probabilidad <= 3) {
-				System.out.println("Jugador " + pingu.getNombre() + " ha obtenido un dado rápido");
-				pingu.getInventario().setDadosR(pingu.getInventario().getDadosR() + 1);
-				tipoDado = "dado rápido";
+				try {
 
+					Connection con = GuardarConBD.getConexion();
+					System.out.println("Jugador " + pingu.getNombre() + " ha obtenido un dado rápido");
+					pingu.getInventario().setDadosR(pingu.getInventario().getDadosR() + 1);
+					tipoDado = "dado rápido";
+
+					String sqlUpdateRapidos = "UPDATE INVENTARIO SET NUM_DADOSRAPIDOS = " + (nDadosRapidos + 1)
+							+ " WHERE idPropietario = " + pingu.getId() + " AND id_partida = " + idPartida;
+					bbdd.update(con, sqlUpdateRapidos);
+					con.commit();
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			} else {
-				System.out.println("Jugador " + pingu.getNombre() + " ha obtenido un dado lento");
-				pingu.getInventario().setDadosL(pingu.getInventario().getDadosL() + 1);
-				tipoDado = "dado lento";
+				try {
+					Connection con = GuardarConBD.getConexion();
+					System.out.println("Jugador " + pingu.getNombre() + " ha obtenido un dado lento");
+					pingu.getInventario().setDadosL(pingu.getInventario().getDadosL() + 1);
+					tipoDado = "dado lento";
+
+					String sqlUpdateLentos = "UPDATE INVENTARIO SET NUM_DADOSLENTOS = " + (nDadosLentos + 1)
+							+ " WHERE idPropietario = " + pingu.getId() + " AND id_partida = " + idPartida;
+					bbdd.update(con, sqlUpdateLentos);
+					con.commit();
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			
+			try {
+				Connection con = GuardarConBD.getConexion();
+				String sqlUpdate = "UPDATE INVENTARIO SET NUM_DADOSESP = " + (nDados + 1) + " WHERE idPropietario = "
+						+ pingu.getId() + " AND id_partida = " + idPartida;
+				bbdd.update(con, sqlUpdate);
+				con.commit();
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 
 			pingu.getInventario().setDados(pingu.getInventario().getDados() + 1);

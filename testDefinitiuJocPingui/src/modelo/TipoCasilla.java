@@ -264,6 +264,7 @@ public class TipoCasilla extends Casilla {
 					+ pingu.getId() + " AND id_partida = " + idPartida;
 
 			bbdd.update(con, sqlUpdate);
+			con.commit();
 			pingu.getInventario().setBolasDeNieve(bolasTotales);
 			
 		} catch (Exception e) {

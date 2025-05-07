@@ -102,21 +102,22 @@ public class pantallaMenu {
 					Tablero tablero = new Tablero();
 
 					if (rsTablero.next()) {
-						Array sqlArray = rsTablero.getArray("tablero");
-						Object[] arrayDatos = (Object[]) sqlArray.getArray();
+					    Array sqlArray = rsTablero.getArray("tablero"); 
+					    Object[] arrayDatos = (Object[]) sqlArray.getArray(); 
 
-						ArrayList<Evento> listaCasillas = new ArrayList<>();
+					    ArrayList<Evento> listaCasillas = new ArrayList<>();
 
-						for (int i = 0; i < arrayDatos.length; i++) {
-							String eventoString = (String) arrayDatos[i];
-							Evento evento = convertirStringAEvento(eventoString);
-							listaCasillas.add(evento);
-						}
+					    for (int i = 0; i < arrayDatos.length; i++) {
+					        String eventoString = (String) arrayDatos[i]; // Convertimos a String
+					        Evento evento = convertirStringAEvento(eventoString); // Convertimos a Evento
+					        listaCasillas.add(evento);
+					    }
 
-						tablero.setCasillas(listaCasillas);
-						System.out.println("Tablero cargado correctamente con " + listaCasillas.size() + " casillas.");
+					    tablero.setCasillas(listaCasillas);
+					    System.out.println("Tablero cargado con " + listaCasillas.size() + " casillas.");
 					}
 
+					GuardarConBD.setTableroCargado(tablero);
 					rsTablero.close();
 
 					try {
@@ -144,7 +145,7 @@ public class pantallaMenu {
 		}
 	}
 
-	public Evento convertirStringAEvento(String eventoString) {
+	private Evento convertirStringAEvento(String eventoString) {
 		Evento evt = null;
 		switch (eventoString) {
 		case "Casilla Vacía":
@@ -194,7 +195,7 @@ public class pantallaMenu {
 
 			Tablero tablero = new Tablero();
 			tablero.creacionTablero();
-
+			GuardarConBD.setTableroCargado(tablero);
 			// Carga de la ventana del tablero
 
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/pantallaJuego.fxml"));

@@ -76,9 +76,8 @@ public class pantallaJuegoController {
 	private int p1Position = 0; // Tracks current position (from 0 to 49 in a 5x10 grid)
 	private final int COLUMNS = 5;
 	public Pinguino pingu;
-	public Tablero tablero;
 	public int idPartida;
-  
+	public Tablero tablero;
 
 		
 		@FXML
@@ -91,6 +90,8 @@ public class pantallaJuegoController {
 
 
 		public void colocarIconos() {
+			
+			tablero = GuardarConBD.getTableroCargado();
 			Evento evento = null;
 			int fila = 0;
 			int columna = 0;
@@ -220,6 +221,7 @@ public class pantallaJuegoController {
 		}
 
 		private void administrarEventos(int posicion) {
+			 tablero = GuardarConBD.getTableroCargado();
 			Evento evento = tablero.getCasillas().get(posicion);
 			TipoCasilla tipoCasilla = new TipoCasilla("vacío", 0);
 			switch (evento.getIDEvento()) {

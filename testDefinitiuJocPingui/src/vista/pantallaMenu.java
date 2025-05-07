@@ -135,7 +135,10 @@ public class pantallaMenu {
 				idPartida = rsPartida.getInt(1);
 				System.out.println("ID partida generada: " + idPartida);
 			}
+			
+			rsPartida.close();
 			GuardarConBD.setIdPartidaCargada(idPartida);
+			
 			// Insert inventario + obtención de ID de la partida
 
 			String insertInventario = "INSERT INTO inventario (id_inventario, num_peces, num_dadosesp, num_dadoslentos, num_dadosrapidos, num_bolasnieve, posicion_jugador, idpropietario, id_partida) "
@@ -143,7 +146,22 @@ public class pantallaMenu {
 
 			bbdd.insert(con, insertInventario);
 			con.commit();
-			rsPartida.close();
+			
+			//Obtener la ID del inventario creado
+			
+			int idInventario = 0;
+			String sqlSelect = "SELECT idInventarios.currval FROM dual";
+			ResultSet rsInventario = bbdd.select(con, sqlSelect);
+			if (rsInventario.next()) {
+				idInventario = rsInventario.getInt(1);
+			}
+			rsInventario.close();
+			
+			
+			//Asignar inventario al objeto pinguino
+			
+			Inventario inv = new Inventario(idInventario, 0, 0, 0, 0, 0);
+			pingu.setInventario(inv);
 
 		} catch (Exception e) {
 			e.printStackTrace();

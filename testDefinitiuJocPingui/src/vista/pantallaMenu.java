@@ -102,19 +102,19 @@ public class pantallaMenu {
 					Tablero tablero = new Tablero();
 
 					if (rsTablero.next()) {
-					    Array sqlArray = rsTablero.getArray("tablero"); 
-					    Object[] arrayDatos = (Object[]) sqlArray.getArray(); 
+						Array sqlArray = rsTablero.getArray("tablero");
+						Object[] arrayDatos = (Object[]) sqlArray.getArray();
 
-					    ArrayList<Evento> listaCasillas = new ArrayList<>();
+						ArrayList<Evento> listaCasillas = new ArrayList<>();
 
-					    for (int i = 0; i < arrayDatos.length; i++) {
-					        String eventoString = (String) arrayDatos[i]; // Convertimos a String
-					        Evento evento = convertirStringAEvento(eventoString); // Convertimos a Evento
-					        listaCasillas.add(evento);
-					    }
+						for (int i = 0; i < arrayDatos.length; i++) {
+							String eventoString = (String) arrayDatos[i];
+							Evento evento = convertirStringAEvento(eventoString);
+							listaCasillas.add(evento);
+						}
 
-					    tablero.setCasillas(listaCasillas);
-					    System.out.println("Tablero cargado con " + listaCasillas.size() + " casillas.");
+						tablero.setCasillas(listaCasillas);
+						System.out.println("Tablero cargado con " + listaCasillas.size() + " casillas.");
 					}
 
 					GuardarConBD.setTableroCargado(tablero);
@@ -148,14 +148,14 @@ public class pantallaMenu {
 	private Evento convertirStringAEvento(String eventoString) {
 		Evento evt = null;
 		switch (eventoString) {
-		case "Casilla Vacía":
-			evt = new Evento(1, "Casilla Vacía");
+		case "Casilla vacía":
+			evt = new Evento(1, "Casilla vacía");
 			break;
 		case "Oso":
 			evt = new Evento(2, "Oso");
 			break;
-		case "Agujero de hielo":
-			evt = new Evento(3, "Agujero de hielo");
+		case "Agujero en el hielo":
+			evt = new Evento(3, "Agujero en el hielo");
 			break;
 		case "Trineo":
 			evt = new Evento(4, "Trineo");
@@ -178,7 +178,7 @@ public class pantallaMenu {
 		default:
 			break;
 		}
-		
+
 		return evt;
 	}
 

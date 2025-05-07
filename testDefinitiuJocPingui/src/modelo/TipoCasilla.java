@@ -246,8 +246,6 @@ public class TipoCasilla extends Casilla {
 		int generador = r.nextInt(3) + 1;
 		int bolasJugador = pingu.getInventario().getBolasDeNieve();
 		int bolasTotales = 0;
-		alerta.setTitle("Bolas de Nieve");
-		alerta.setHeaderText(null);
 
 		if (bolasJugador >= 6) {
 			System.out.println("Tienes el máximo de bolas de nieve permitidas");

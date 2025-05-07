@@ -19,7 +19,7 @@ public class Tablero {
 	}
 	
 	public ArrayList<Evento> getCasillas() {
-		return this.casillas;
+		return casillas;
 	}
 
 	public void setCasillas(ArrayList<Evento> casillas) {

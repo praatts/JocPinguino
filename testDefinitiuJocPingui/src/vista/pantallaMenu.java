@@ -31,6 +31,7 @@ public class pantallaMenu {
 	@FXML
 	private Text bienvenidoTexto;
 	private Pinguino pingu;
+
 	@FXML
 	public void mostrarNombreLogin(Pinguino p) {
 		bienvenidoTexto.setText("¡Bienvenido, " + p.getNombre() + "!");
@@ -72,7 +73,68 @@ public class pantallaMenu {
 					int idSeleccionada = partidaACargar.get();
 					GuardarConBD.setIdPartidaCargada(idSeleccionada);
 					System.out.println("ID de la partida a cargar: " + idSeleccionada);
-					
+
+					String sqlObtenerInventario = "SELECT ID_INVENTARIO, NUM_PECES, NUM_DADOSESP, NUM_DADOSLENTOS, NUM_DADOSRAPIDOS, NUM_BOLASNIEVE, POSICION_JUGADOR FROM INVENTARIO "
+							+ "WHERE idPropietario = " + pingu.getId() + " AND id_partida = " + idSeleccionada;
+
+					ResultSet rsInv = bbdd.select(con, sqlObtenerInventario);
+
+					if (rsInv.next()) {
+						int idInv = rsInv.getInt("ID_INVENTARIO");
+						int nPeces = rsInv.getInt("NUM_PECES");
+						int nDados = rsInv.getInt("NUM_DADOSESP");
+						int nDadosL = rsInv.getInt("NUM_DADOSLENTOS");
+						int nDadosR = rsInv.getInt("NUM_DADOSRAPIDOS");
+						int nBolasNieve = rsInv.getInt("NUM_BOLASNIEVE");
+						int posicion = rsInv.getInt("POSICION_JUGADOR");
+
+						Inventario inv = new Inventario(idInv, nPeces, nDados, nDadosL, nDadosR, nBolasNieve);
+						pingu.setInventario(inv);
+						pingu.setPosicion(posicion);
+
+					}
+
+					rsInv.close();
+
+					String sqlObtenerTablero = "SELECT tablero FROM partida WHERE idpartida = " + idSeleccionada
+							+ " AND idCreador = " + pingu.getId();
+					ResultSet rsTablero = bbdd.select(con, sqlObtenerTablero);
+					Tablero tablero = new Tablero();
+
+					if (rsTablero.next()) {
+						Array sqlArray = rsTablero.getArray("tablero");
+						Object[] arrayDatos = (Object[]) sqlArray.getArray();
+
+						ArrayList<Evento> listaCasillas = new ArrayList<>();
+
+						for (int i = 0; i < arrayDatos.length; i++) {
+							String eventoString = (String) arrayDatos[i];
+							Evento evento = convertirStringAEvento(eventoString);
+							listaCasillas.add(evento);
+						}
+
+						tablero.setCasillas(listaCasillas);
+						System.out.println("Tablero cargado correctamente con " + listaCasillas.size() + " casillas.");
+					}
+
+					rsTablero.close();
+
+					try {
+						FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/pantallaJuego.fxml"));
+						Parent pantallaJuegoRoot = loader.load();
+
+						pantallaJuegoController controladorJuego = loader.getController();
+						controladorJuego.tablero = tablero;
+						controladorJuego.pingu = pingu;
+						controladorJuego.colocarIconos();
+						Scene pantallaJuego = new Scene(pantallaJuegoRoot);
+						Stage stage = (Stage) ((Node) Event.getSource()).getScene().getWindow();
+						stage.setScene(pantallaJuego);
+						stage.setTitle("Pantalla del tablero");
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+
 				}
 
 			}
@@ -80,6 +142,43 @@ public class pantallaMenu {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public Evento convertirStringAEvento(String eventoString) {
+		Evento evt = null;
+		switch (eventoString) {
+		case "Casilla Vacía":
+			evt = new Evento(1, "Casilla Vacía");
+			break;
+		case "Oso":
+			evt = new Evento(2, "Oso");
+			break;
+		case "Agujero de hielo":
+			evt = new Evento(3, "Agujero de hielo");
+			break;
+		case "Trineo":
+			evt = new Evento(4, "Trineo");
+			break;
+		case "Interrogante":
+			evt = new Evento(5, "Interrogante");
+			break;
+		case "Obtener Pez":
+			evt = new Evento(6, "Obtener Pez");
+			break;
+		case "Obtener bolas de nieve":
+			evt = new Evento(7, "Obtener bolas de nieve");
+			break;
+		case "Obtener dado":
+			evt = new Evento(8, "Obtener dado");
+			break;
+		case "Línea de meta":
+			evt = new Evento(9, "Línea de meta");
+			break;
+		default:
+			break;
+		}
+		
+		return evt;
 	}
 
 	@FXML
@@ -100,8 +199,9 @@ public class pantallaMenu {
 
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/pantallaJuego.fxml"));
 			Parent pantallaJuegoRoot = loader.load();
+
 			pantallaJuegoController controladorJuego = loader.getController();
-			controladorJuego.tablero = tablero;
+			controladorJuego.tablero = tablero; // Asegúrate de que "tablero" está definido
 			controladorJuego.pingu = pingu;
 			controladorJuego.colocarIconos();
 			Scene pantallaJuego = new Scene(pantallaJuegoRoot);
@@ -119,7 +219,6 @@ public class pantallaMenu {
 			}
 			tableroString += ")";
 
-			
 			// Insert información de la partida + obtención de ID de la partida
 
 			String insertPartida = "INSERT INTO partida (idpartida, fecha, estado, idCreador, tablero) "
@@ -128,17 +227,17 @@ public class pantallaMenu {
 			bbdd.insert(con, insertPartida);
 			System.out.println("SQL: " + insertPartida);
 			con.commit();
-			
+
 			int idPartida = 0;
 			ResultSet rsPartida = bbdd.select(con, "SELECT idPartidas.currval FROM dual");
 			if (rsPartida.next()) {
 				idPartida = rsPartida.getInt(1);
 				System.out.println("ID partida generada: " + idPartida);
 			}
-			
+
 			rsPartida.close();
 			GuardarConBD.setIdPartidaCargada(idPartida);
-			
+
 			// Insert inventario + obtención de ID de la partida
 
 			String insertInventario = "INSERT INTO inventario (id_inventario, num_peces, num_dadosesp, num_dadoslentos, num_dadosrapidos, num_bolasnieve, posicion_jugador, idpropietario, id_partida) "
@@ -146,9 +245,9 @@ public class pantallaMenu {
 
 			bbdd.insert(con, insertInventario);
 			con.commit();
-			
-			//Obtener la ID del inventario creado
-			
+
+			// Obtener la ID del inventario creado
+
 			int idInventario = 0;
 			String sqlSelect = "SELECT idInventarios.currval FROM dual";
 			ResultSet rsInventario = bbdd.select(con, sqlSelect);
@@ -156,10 +255,9 @@ public class pantallaMenu {
 				idInventario = rsInventario.getInt(1);
 			}
 			rsInventario.close();
-			
-			
-			//Asignar inventario al objeto pinguino
-			
+
+			// Asignar inventario al objeto pinguino
+
 			Inventario inv = new Inventario(idInventario, 0, 0, 0, 0, 0);
 			pingu.setInventario(inv);
 

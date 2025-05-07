@@ -373,15 +373,18 @@ public class TipoCasilla extends Casilla {
 			Connection con = GuardarConBD.getConexion();
 			if (pingu.getPosicion() == 49) {
 				
-				String sqlUpdate = "UPDATE partida SET estado = 'finalizada' WHERE idPartida = " + idPartida;
+				String sqlUpdate = "UPDATE partida SET estado = 'finalizada' WHERE idPartida = " + idPartida + " AND idCreador = " + pingu.getId();
 				bbdd.update(con, sqlUpdate);
 				con.commit();
 				
 				Alert alerta = new Alert(AlertType.INFORMATION);
 				alerta.setTitle("Ganador");
 				alerta.setHeaderText(null);
-				alerta.setContentText(pingu.getNombre() + " ha ganado!");
+				alerta.setContentText(pingu.getNombre() + " ha ganado!\n\nPulse en el desplegable superior izquierdo para cargar otra partida o cerrar el juego");
 				alerta.showAndWait();
+				
+				
+				
 			}
 			
 		} catch (Exception e) {

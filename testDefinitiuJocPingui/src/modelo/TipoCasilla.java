@@ -343,7 +343,7 @@ public class TipoCasilla extends Casilla {
 					e.printStackTrace();
 				}
 			}
-			
+
 			try {
 				Connection con = GuardarConBD.getConexion();
 				String sqlUpdate = "UPDATE INVENTARIO SET NUM_DADOSESP = " + (nDados + 1) + " WHERE idPropietario = "
@@ -368,12 +368,25 @@ public class TipoCasilla extends Casilla {
 	}
 
 	public void lineaDeMeta(Pinguino pingu) {
-		if (pingu.getPosicion() == 49) {
-			Alert alerta = new Alert(AlertType.INFORMATION);
-			alerta.setTitle("Ganador");
-			alerta.setHeaderText(null);
-			alerta.setContentText(pingu.getNombre() + " ha ganado!");
-			alerta.showAndWait();
+		idPartida = GuardarConBD.getIdPartidaCargada();
+		try {
+			Connection con = GuardarConBD.getConexion();
+			if (pingu.getPosicion() == 49) {
+				
+				String sqlUpdate = "UPDATE partida SET estado = 'finalizada' WHERE idPartida = " + idPartida;
+				bbdd.update(con, sqlUpdate);
+				con.commit();
+				
+				Alert alerta = new Alert(AlertType.INFORMATION);
+				alerta.setTitle("Ganador");
+				alerta.setHeaderText(null);
+				alerta.setContentText(pingu.getNombre() + " ha ganado!");
+				alerta.showAndWait();
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+
 	}
 }

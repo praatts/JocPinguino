@@ -4,6 +4,16 @@ import modelo.Pinguino;
 public class GuardarConBD {
 	private static Connection conexion;
 	private static Pinguino pinguino;
+	private static int idPartidaCargada;
+	
+	public static int getIdPartidaCargada() {
+		return idPartidaCargada;
+	}
+
+	public static void setIdPartidaCargada(int idPartidaCargada) {
+		GuardarConBD.idPartidaCargada = idPartidaCargada;
+	}
+
 	public static void setConexion(Connection con) {
 		conexion = con;
 	}

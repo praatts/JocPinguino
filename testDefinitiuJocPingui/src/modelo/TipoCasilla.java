@@ -14,7 +14,7 @@ import javafx.scene.control.ButtonType;
 import vista.pantallaJuegoController;
 
 public class TipoCasilla extends Casilla {
-
+	private int idPartida;
 	private String tipo;
 	private int id;
 	private pantallaJuegoController actualizarPosicionVisual;
@@ -204,26 +204,29 @@ public class TipoCasilla extends Casilla {
 	//Método que añade pescados al inventario del jugador.
 
 	public void obtenerPescado(Pinguino pingu) {
-		Alert alerta;
+		Alert alerta = null;
 		int pecesJugador = pingu.getInventario().getPeces();
-
+		idPartida = GuardarConBD.getIdPartidaCargada();
 		if (pecesJugador < 2) {
 			
 			try {
 				Connection con = GuardarConBD.getConexion();
+				String sqlUpdate = "UPDATE INVENTARIO SET NUM_PECES = " + (pecesJugador + 1) + 
+						" WHERE IDPropietario = " + pingu.getId() + 
+						" AND id_partida = " + idPartida;
 				
-			} catch (Exception e) {
-				e.printStackTrace();
-				String consulta = "UPDATE INVENTARIO SET NUM_PECES = " + (pecesJugador + 1) + 
-						"WHERE ID_INVENTARIO = " + pingu.getInventario(); 
-			}
+			bbdd.update(con, sqlUpdate);
 			pingu.getInventario().setPeces(pecesJugador + 1);
-
+			
 			alerta = new Alert(AlertType.INFORMATION);
 			alerta.setTitle("Pescado/s añadido al inventario");
 			alerta.setHeaderText(null);
 			alerta.setContentText(
 					"Se ha añadido un pez al inventario!\nPeces en el inventario: " + pingu.getInventario().getPeces());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 		} else {
 			alerta = new Alert(AlertType.WARNING);
 			alerta.setTitle("Inventario lleno de pescados");

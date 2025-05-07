@@ -89,25 +89,6 @@ public class pantallaJuegoController {
 
 		}
 
-		private int ultimaIDPartida () {
-		
-		try {
-		Connection con = GuardarConBD.getConexion();
-		String sql = "SELECT MAX(idPartida) FROM  partida";
-		
-		ResultSet rs = bbdd.select(con, sql);
-		
-		if (rs.next()) {
-			idPartida = rs.getInt(1);
-		}
-		rs.close();
-		
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-			return idPartida;
-
-		}
 
 		public void colocarIconos() {
 			Evento evento = null;
@@ -364,11 +345,8 @@ public class pantallaJuegoController {
 		try {
 			Connection con = GuardarConBD.getConexion();
 			con.setAutoCommit(false);
-			idPartida = ultimaIDPartida();
-			//Buscar la id activa de la partida en curso
+			idPartida = GuardarConBD.getIdPartidaCargada();
 			
-			String selectIDPartida = "SELECT i.id_partida FROM inventario i, partida p WHERE i.id_partida = " + idPartida + " AND estado = 'en curso'";
-			System.out.println(pingu.getId());
 			
 			//Actualizar posicion del jugador	
 				

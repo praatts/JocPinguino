@@ -31,7 +31,6 @@ public class pantallaMenu {
 	@FXML
 	private Text bienvenidoTexto;
 	private Pinguino pingu;
-
 	@FXML
 	public void mostrarNombreLogin(Pinguino p) {
 		bienvenidoTexto.setText("¡Bienvenido, " + p.getNombre() + "!");
@@ -71,8 +70,9 @@ public class pantallaMenu {
 				Optional<Integer> partidaACargar = seleccionarPartida.showAndWait();
 				if (partidaACargar.isPresent()) {
 					int idSeleccionada = partidaACargar.get();
-
+					GuardarConBD.setIdPartidaCargada(idSeleccionada);
 					System.out.println("ID de la partida a cargar: " + idSeleccionada);
+					
 				}
 
 			}
@@ -135,8 +135,7 @@ public class pantallaMenu {
 				idPartida = rsPartida.getInt(1);
 				System.out.println("ID partida generada: " + idPartida);
 			}
-			
-
+			GuardarConBD.setIdPartidaCargada(idPartida);
 			// Insert inventario + obtención de ID de la partida
 
 			String insertInventario = "INSERT INTO inventario (id_inventario, num_peces, num_dadosesp, num_dadoslentos, num_dadosrapidos, num_bolasnieve, posicion_jugador, idpropietario, id_partida) "

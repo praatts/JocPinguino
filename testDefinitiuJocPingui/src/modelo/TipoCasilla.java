@@ -19,16 +19,15 @@ public class TipoCasilla extends Casilla {
 	private int id;
 	private pantallaJuegoController actualizarPosicionVisual;
 
-	//Constructor 
-	
+	// Constructor
+
 	public TipoCasilla(String tipo, int id) {
 
 		super(tipo, id);
 
 	}
 
-	
-	//Setters i Getters
+	// Setters i Getters
 	public String getTipo() {
 		return tipo;
 	}
@@ -45,8 +44,8 @@ public class TipoCasilla extends Casilla {
 		this.id = id;
 	}
 
-	//Manda al jugador al inicio del juego si no tiene 2 pescados
-	
+	// Manda al jugador al inicio del juego si no tiene 2 pescados
+
 	public void casillaOso(Pinguino pingu, pantallaJuegoController actualizarPosicionVisual) {
 		Alert alerta = null;
 		int pecesJugador = pingu.getInventario().getPeces();
@@ -74,8 +73,9 @@ public class TipoCasilla extends Casilla {
 
 	}
 
-	//Método casilla agujeroHielo, manda al jugador al anterior agujero de hielo (si lo hay)
-	
+	// Método casilla agujeroHielo, manda al jugador al anterior agujero de hielo
+	// (si lo hay)
+
 	public void casillaAgujeroHielo(Pinguino pingu, ArrayList<Evento> casillas,
 			pantallaJuegoController actualizarPosicionVisual) {
 		int agujeroActual = pingu.getPosicion();
@@ -121,8 +121,8 @@ public class TipoCasilla extends Casilla {
 		}
 	}
 
-	//Método de casilla trinero (manda al jugador al SIGUIENTE trineo)
-	
+	// Método de casilla trinero (manda al jugador al SIGUIENTE trineo)
+
 	public void casillaTrineo(Pinguino pingu, ArrayList<Evento> casillas,
 			pantallaJuegoController actualizarPosicionVisual) {
 		int trineoActual = pingu.getPosicion();
@@ -168,24 +168,24 @@ public class TipoCasilla extends Casilla {
 
 	}
 
-	//Método que activa un evento aleatorio
-	
+	// Método que activa un evento aleatorio
+
 	public void accionInterrogante(Pinguino pingu) {
 		TipoCasilla activador = new TipoCasilla("", 0);
 		Random random = new Random();
-	    Alert alerta = new Alert(AlertType.INFORMATION);
-	    alerta.setTitle("Evento de Casilla Interrogante");
-	    alerta.setHeaderText(null);
+		Alert alerta = new Alert(AlertType.INFORMATION);
+		alerta.setTitle("Evento de Casilla Interrogante");
+		alerta.setHeaderText(null);
 
 		System.out.println("¡Jugador " + pingu.getNombre() + " ha activado una casilla de interrogante!");
-		
+
 		int esdeveniment = random.nextInt(3);
 		switch (esdeveniment) {
 		case 0:
 			System.out.println("¡Jugador " + pingu.getNombre() + " ha obtenido un pez!");
 			alerta.setContentText("¡Jugador " + pingu.getNombre() + " ha activado una casilla de interrogante!");
 			activador.obtenerPescado(pingu);
-			  
+
 			break;
 		case 1:
 			System.out.println("¡Jugador " + pingu.getNombre() + " ha obtenido una/s bola de nieve!");
@@ -197,36 +197,35 @@ public class TipoCasilla extends Casilla {
 			System.out.println("¡Jugador " + pingu.getNombre() + " ha obtenido un dado aleatorio!");
 			activador.obtenerDadoAleatorio(pingu);
 			break;
-	
+
 		}
 	}
-	
-	//Método que añade pescados al inventario del jugador.
+
+	// Método que añade pescados al inventario del jugador.
 
 	public void obtenerPescado(Pinguino pingu) {
 		Alert alerta = null;
 		int pecesJugador = pingu.getInventario().getPeces();
 		idPartida = GuardarConBD.getIdPartidaCargada();
 		if (pecesJugador < 2) {
-			
+
 			try {
 				Connection con = GuardarConBD.getConexion();
-				String sqlUpdate = "UPDATE INVENTARIO SET NUM_PECES = " + (pecesJugador + 1) + 
-						" WHERE IDPropietario = " + pingu.getId() + 
-						" AND id_partida = " + idPartida;
-				
-			bbdd.update(con, sqlUpdate);
-			pingu.getInventario().setPeces(pecesJugador + 1);
-			
-			alerta = new Alert(AlertType.INFORMATION);
-			alerta.setTitle("Pescado/s añadido al inventario");
-			alerta.setHeaderText(null);
-			alerta.setContentText(
-					"Se ha añadido un pez al inventario!\nPeces en el inventario: " + pingu.getInventario().getPeces());
+				String sqlUpdate = "UPDATE INVENTARIO SET NUM_PECES = " + (pecesJugador + 1) + " WHERE IDPropietario = "
+						+ pingu.getId() + " AND id_partida = " + idPartida;
+
+				bbdd.update(con, sqlUpdate);
+				pingu.getInventario().setPeces(pecesJugador + 1);
+
+				alerta = new Alert(AlertType.INFORMATION);
+				alerta.setTitle("Pescado/s añadido al inventario");
+				alerta.setHeaderText(null);
+				alerta.setContentText("Se ha añadido un pez al inventario!\nPeces en el inventario: "
+						+ pingu.getInventario().getPeces());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
+
 		} else {
 			alerta = new Alert(AlertType.WARNING);
 			alerta.setTitle("Inventario lleno de pescados");
@@ -240,39 +239,57 @@ public class TipoCasilla extends Casilla {
 		alerta.showAndWait();
 	}
 
-	//Método para añadir de 1 a 3 bolas de nieve al inventario del jugador
-	
+	// Método para añadir de 1 a 3 bolas de nieve al inventario del jugador
+
 	public void obtenerBolasdeNieve(Pinguino pingu) {
 		Random r = new Random();
 		int generador = r.nextInt(3) + 1;
 		int bolasJugador = pingu.getInventario().getBolasDeNieve();
-		int bolasTotales = bolasJugador + generador;
-		Alert alerta = new Alert(AlertType.INFORMATION);
+		int bolasTotales = 0;
 		alerta.setTitle("Bolas de Nieve");
 		alerta.setHeaderText(null);
 
 		if (bolasJugador >= 6) {
 			System.out.println("Tienes el máximo de bolas de nieve permitidas");
-			alerta.setAlertType(AlertType.WARNING);
-			alerta.setContentText(
-					"Ya tienes el máximo número de bolas de nieve permitidas, no se ha añadido ninguna bola de nieve al inventario.");
-		} else if (bolasTotales >= 6) {
-			pingu.getInventario().setBolasDeNieve(6);
-			alerta.setContentText("Has conseguido " + generador + " bolas de nieve\nTienes "
-					+ pingu.getInventario().getBolasDeNieve() + " en el inventario!");
-
+		} else if (bolasJugador + generador >= 6) {
+			bolasTotales = 6;
 		} else {
-			pingu.getInventario().setBolasDeNieve(bolasTotales);
-			alerta.setContentText("Has obtenido " + generador + " bolas de nieve\nTienes un total de " + bolasTotales
-					+ " en el inventario!");
+			bolasTotales = bolasJugador + generador;
 		}
-		
-		alerta.showAndWait();
+
+		// Actualización en la base de datos
+		try {
+			Connection con = GuardarConBD.getConexion();
+			int idPartida = GuardarConBD.getIdPartidaCargada();
+
+			String sqlUpdate = "UPDATE INVENTARIO SET NUM_BOLASNIEVE = " + bolasTotales + " WHERE idpropietario = "
+					+ pingu.getId() + " AND id_partida = " + idPartida;
+
+			bbdd.update(con, sqlUpdate);
+			pingu.getInventario().setBolasDeNieve(bolasTotales);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		 Alert alerta = new Alert(AlertType.INFORMATION);
+		    alerta.setTitle("Bolas de Nieve");
+		    alerta.setHeaderText(null);
+
+		    if (bolasJugador >= 6) {
+		        alerta.setAlertType(AlertType.WARNING);
+		        alerta.setContentText("Ya tienes el máximo número de bolas de nieve permitidas, no se ha añadido ninguna bola de nieve al inventario.");
+		    } else {
+		        alerta.setContentText("Has conseguido " + generador + " bolas de nieve.\nAhora tienes " + bolasTotales + " en el inventario.");
+		    }
+
+		    alerta.showAndWait();
 
 	}
 
-	//Método con probabilidades (30/70)% para obtener un dado rápido (5 a 10 casillas) o un dado lento (1 a 3 casillas)
-	
+	// Método con probabilidades (30/70)% para obtener un dado rápido (5 a 10
+	// casillas) o un dado lento (1 a 3 casillas)
+
 	public void obtenerDadoAleatorio(Pinguino pingu) {
 		Random r = new Random();
 		Alert alerta = null;
@@ -311,14 +328,14 @@ public class TipoCasilla extends Casilla {
 			alerta.showAndWait();
 		}
 	}
-	
+
 	public void lineaDeMeta(Pinguino pingu) {
-        if (pingu.getPosicion() == 49) {
-            Alert alerta = new Alert(AlertType.INFORMATION);
-            alerta.setTitle("Ganador");
-            alerta.setHeaderText(null);
-            alerta.setContentText(pingu.getNombre() + " ha ganado!");
-            alerta.showAndWait();
-        }
-    }
+		if (pingu.getPosicion() == 49) {
+			Alert alerta = new Alert(AlertType.INFORMATION);
+			alerta.setTitle("Ganador");
+			alerta.setHeaderText(null);
+			alerta.setContentText(pingu.getNombre() + " ha ganado!");
+			alerta.showAndWait();
+		}
+	}
 }

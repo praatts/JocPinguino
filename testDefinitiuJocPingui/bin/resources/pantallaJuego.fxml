@@ -59,7 +59,7 @@
             <MenuItem fx:id="newGame" mnemonicParsing="false" text="New" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem fx:id="saveGame" mnemonicParsing="false" text="Save" />
-            <MenuItem fx:id="loadGame" mnemonicParsing="false" text="Load" />
+            <MenuItem fx:id="loadGame" mnemonicParsing="false" text="Load" onAction="#handleLoadGame" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem fx:id="quitGame" mnemonicParsing="false" text="Quit" onAction="#handleQuitGame" />
           </items>

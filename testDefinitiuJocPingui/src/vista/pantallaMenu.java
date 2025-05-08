@@ -75,6 +75,11 @@ public class pantallaMenu {
 					GuardarConBD.setIdPartidaCargada(idSeleccionada);
 					System.out.println("ID de la partida a cargar: " + idSeleccionada);
 
+					String updatePJugadas = "UPDATE JUGADOR SET NUM_PARTIDAS_JUGADAS = NUM_PARTIDAS_JUGADAS + 1 WHERE id_Jugador = "
+							+ pingu.getId();
+					bbdd.update(con, updatePJugadas);
+					con.commit();
+
 					String sqlObtenerInventario = "SELECT ID_INVENTARIO, NUM_PECES, NUM_DADOSESP, NUM_DADOSLENTOS, NUM_DADOSRAPIDOS, NUM_BOLASNIEVE, POSICION_JUGADOR FROM INVENTARIO "
 							+ "WHERE idPropietario = " + pingu.getId() + " AND id_partida = " + idSeleccionada;
 
@@ -92,7 +97,7 @@ public class pantallaMenu {
 						Inventario inv = new Inventario(idInv, nPeces, nDados, nDadosL, nDadosR, nBolasNieve);
 						pingu.setInventario(inv);
 						pingu.setPosicion(posicion);
-						
+
 					}
 
 					rsInv.close();
@@ -231,6 +236,11 @@ public class pantallaMenu {
 			System.out.println("SQL: " + insertPartida);
 			con.commit();
 
+			String updatePJugadas = "UPDATE JUGADOR SET NUM_PARTIDAS_JUGADAS = NUM_PARTIDAS_JUGADAS + 1 WHERE id_Jugador = "
+					+ pingu.getId();
+			bbdd.update(con, updatePJugadas);
+			con.commit();
+
 			int idPartida = 0;
 			ResultSet rsPartida = bbdd.select(con, "SELECT idPartidas.currval FROM dual");
 			if (rsPartida.next()) {
@@ -279,14 +289,14 @@ public class pantallaMenu {
 
 		Platform.exit();
 	}
-	
+
 	@FXML
 	public void handleMostrarReglas(ActionEvent Event) {
-		
-		Alert alerta = new Alert (AlertType.INFORMATION);
+
+		Alert alerta = new Alert(AlertType.INFORMATION);
 		alerta.setTitle("COMO JUGAR / REGLAS DEL JUEGO");
 		alerta.setHeaderText(null);
-		
+
 		String reglas = "¡BIENVENIDO AL JUEGO DEL PINGUINO, AQUÍ APRENDERÁS A COMO JUGAR Y LAS REGLAS DEL JUEGO!\n\n1. OBJETIVO PRINCIPAL\n -El objetivo principal del juego es llegar a la línea de meta"
 				+ " (representada con una bandera a cuadros) evitando distintos obstaculos como un Oso o Agujeros de hielo en el tablero, pero también cuentas con ayudas como la obtención de pescados o trineos.\n\n"
 				+ "2. EVENTOS\n -Los obstaculos mencionados en el apartado 1 se representan en el juego como eventos, al caer sobre ellos se activaran y ocurrirá dicho evento, sus funciones son las siguietes:\n "
@@ -305,16 +315,45 @@ public class pantallaMenu {
 				+ "\n\nTodo tu progreso será almacenado automáticamente con el sistema de autoguardado en nuestra base de datos, desde este menú podrás crear una partida completamente nueva o una que hayas jugado"
 				+ " anteriormente y quieras retomarla, también podrás ver el ranking de jugadores con más partidas jugadas. Por último podrás cerrar sesión.\n\n *Cuando te encuentres dentro de la ventana de juego, pulsando en el"
 				+ " desplegable superior izquierdo podrás pulsar en la opción 'Salir' para volver a este menú.";
-		
+
 		TextArea area = new TextArea(reglas);
-		  area.setWrapText(true);
-		  area.setEditable(false);
-		  
-		  alerta.getDialogPane().setContent(area);
-		  alerta.setResizable(true);
-		  alerta.setHeaderText(null);
-		  alerta.showAndWait();
-		
+		area.setWrapText(true);
+		area.setEditable(false);
+
+		alerta.getDialogPane().setContent(area);
+		alerta.setResizable(true);
+		alerta.setHeaderText(null);
+		alerta.showAndWait();
+
+	}
+
+	@FXML
+	public void handleMostrarRankingPartidas(ActionEvent Event) {
+		try {
+			Connection con = GuardarConBD.getConexion();
+			
+			String sqlConsulta = "SELECT nickname, num_partidas_jugadas FROM JUGADOR ORDER BY num_partidas_jugadas BY DESC";
+			ResultSet rs = bbdd.select(con, sqlConsulta);
+			
+			String base = "Ranking de jugadores con más partidas jugadas:\n\n";
+			while (rs.next()) {
+				String nombre = rs.getString("NICKNAME");
+				int partidasJugadas = rs.getInt("NUM_PARTIDAS_JUGADAS");
+				
+				base += nombre + " -> " + partidasJugadas + " partidas jugadas\n";
+				
+			}
+			
+			rs.close();
+			
+			Alert alerta = new Alert(AlertType.INFORMATION);
+			alerta.setTitle("Ranking de jugadores");
+			alerta.setHeaderText("Ranking de jugadores con más partidas jugadas");
+			alerta.setContentText(base);
+			alerta.showAndWait();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

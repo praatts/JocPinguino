@@ -44,9 +44,11 @@ public class TipoCasilla extends Casilla {
 		this.id = id;
 	}
 
+	Pinguino pingu = GuardarConBD.getPinguino();
+	
 	// Manda al jugador al inicio del juego si no tiene 2 pescados
 
-	public void casillaOso(Pinguino pingu, pantallaJuegoController actualizarPosicionVisual) {
+	public void casillaOso(pantallaJuegoController actualizarPosicionVisual) {
 		Alert alerta = null;
 		int pecesJugador = pingu.getInventario().getPeces();
 		System.out.println("¡" + pingu.getNombre() + " se ha encontrado a un oso!");
@@ -85,7 +87,7 @@ public class TipoCasilla extends Casilla {
 	// Método casilla agujeroHielo, manda al jugador al anterior agujero de hielo
 	// (si lo hay)
 
-	public void casillaAgujeroHielo(Pinguino pingu, ArrayList<Evento> casillas,
+	public void casillaAgujeroHielo(ArrayList<Evento> casillas,
 			pantallaJuegoController actualizarPosicionVisual) {
 		int agujeroActual = pingu.getPosicion();
 		int agujeroAnterior = 0;
@@ -179,7 +181,7 @@ public class TipoCasilla extends Casilla {
 
 	// Método que activa un evento aleatorio
 
-	public void accionInterrogante(Pinguino pingu) {
+	public void accionInterrogante() {
 		TipoCasilla activador = new TipoCasilla("", 0);
 		Random random = new Random();
 		Alert alerta = new Alert(AlertType.INFORMATION);
@@ -193,18 +195,18 @@ public class TipoCasilla extends Casilla {
 		case 0:
 			System.out.println("¡Jugador " + pingu.getNombre() + " ha obtenido un pez!");
 			alerta.setContentText("¡Jugador " + pingu.getNombre() + " ha activado una casilla de interrogante!");
-			activador.obtenerPescado(pingu);
+			activador.obtenerPescado();
 
 			break;
 		case 1:
 			System.out.println("¡Jugador " + pingu.getNombre() + " ha obtenido una/s bola de nieve!");
 			alerta.setContentText("¡Jugador " + pingu.getNombre() + " ha activado una casilla de interrogante!");
-			activador.obtenerBolasdeNieve(pingu);
+			activador.obtenerBolasdeNieve();
 			break;
 		case 2:
 			alerta.setContentText("¡Jugador " + pingu.getNombre() + " ha activado una casilla de interrogante!");
 			System.out.println("¡Jugador " + pingu.getNombre() + " ha obtenido un dado aleatorio!");
-			activador.obtenerDadoAleatorio(pingu);
+			activador.obtenerDadoAleatorio();
 			break;
 
 		}
@@ -212,7 +214,8 @@ public class TipoCasilla extends Casilla {
 
 	// Método que añade pescados al inventario del jugador.
 
-	public void obtenerPescado(Pinguino pingu) {
+	public void obtenerPescado() {
+		Pinguino pingu = GuardarConBD.getPinguino();
 		Alert alerta = null;
 		int pecesJugador = pingu.getInventario().getPeces();
 		idPartida = GuardarConBD.getIdPartidaCargada();
@@ -251,7 +254,7 @@ public class TipoCasilla extends Casilla {
 
 	// Método para añadir de 1 a 3 bolas de nieve al inventario del jugador
 
-	public void obtenerBolasdeNieve(Pinguino pingu) {
+	public void obtenerBolasdeNieve() {
 		Random r = new Random();
 		int generador = r.nextInt(3) + 1;
 		int bolasJugador = pingu.getInventario().getBolasDeNieve();
@@ -301,7 +304,8 @@ public class TipoCasilla extends Casilla {
 	// Método con probabilidades (30/70)% para obtener un dado rápido (5 a 10
 	// casillas) o un dado lento (1 a 3 casillas)
 
-	public void obtenerDadoAleatorio(Pinguino pingu) {
+	public void obtenerDadoAleatorio() {
+		
 		Random r = new Random();
 		Alert alerta = null;
 		int idPartida = GuardarConBD.getIdPartidaCargada();
@@ -371,7 +375,8 @@ public class TipoCasilla extends Casilla {
 		}
 	}
 
-	public void lineaDeMeta(Pinguino pingu) {
+	public void lineaDeMeta() {
+		
 		idPartida = GuardarConBD.getIdPartidaCargada();
 		try {
 			Connection con = GuardarConBD.getConexion();

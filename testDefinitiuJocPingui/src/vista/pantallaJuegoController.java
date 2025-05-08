@@ -81,7 +81,7 @@ public class pantallaJuegoController {
 	// ONLY FOR TESTING!!!
 	private int p1Position = 0; // Tracks current position (from 0 to 49 in a 5x10 grid)
 	private final int COLUMNS = 5;
-	public Pinguino pingu;
+	public Pinguino pingu = GuardarConBD.getPinguino();
 	public int idPartida;
 	public Tablero tablero;
 
@@ -223,44 +223,51 @@ public class pantallaJuegoController {
 	}
 
 	private void administrarEventos(int posicion) {
-		tablero = GuardarConBD.getTableroCargado();
-		Evento evento = tablero.getCasillas().get(posicion);
-		TipoCasilla tipoCasilla = new TipoCasilla("vacío", 0);
-		switch (evento.getIDEvento()) {
-		case 2:
-			tipoCasilla = new TipoCasilla("Oso", 2);
-			tipoCasilla.casillaOso(pingu, this);
-			break;
-		case 3:
-			tipoCasilla = new TipoCasilla("Agujero de Hielo", 3);
-			tipoCasilla.casillaAgujeroHielo(pingu, tablero.getCasillas(), this);
-			break;
-		case 4:
-			tipoCasilla = new TipoCasilla("Trineo", 4);
-			tipoCasilla.casillaTrineo(pingu, tablero.getCasillas(), this);
-			break;
-		case 5:
-			tipoCasilla = new TipoCasilla("Interrogante", 5);
-			tipoCasilla.accionInterrogante(pingu);
-			break;
-		case 6:
-			tipoCasilla = new TipoCasilla("Obtener Pez", 6);
-			tipoCasilla.obtenerPescado(pingu);
-			break;
-		case 7:
-			tipoCasilla = new TipoCasilla("Obtener Bolas de Nieve", 7);
-			tipoCasilla.obtenerBolasdeNieve(pingu);
-			break;
-		case 8:
-			tipoCasilla = new TipoCasilla("Obtener Dado", 8);
-			tipoCasilla.obtenerDadoAleatorio(pingu);
-			break;
-		case 9:
-			tipoCasilla = new TipoCasilla("Línea de meta", 9);
-			tipoCasilla.lineaDeMeta(pingu);
-			break;
-
-		}
+		 try {
+		        tablero = GuardarConBD.getTableroCargado();
+		        Evento evento = tablero.getCasillas().get(posicion);
+		       
+		        TipoCasilla tipoCasilla = new TipoCasilla("vacío", 0);
+		        System.out.println("Evento ID: " + evento.getIDEvento());
+		        switch (evento.getIDEvento()) {
+		        
+		            case 2:
+		                tipoCasilla = new TipoCasilla("Oso", 2);
+		                tipoCasilla.casillaOso(this);
+		                break;
+		            case 3:
+		                tipoCasilla = new TipoCasilla("Agujero de Hielo", 3);
+		                tipoCasilla.casillaAgujeroHielo(tablero.getCasillas(), this);
+		                break;
+		            case 4:
+		                tipoCasilla = new TipoCasilla("Trineo", 4);
+		                tipoCasilla.casillaTrineo(pingu, tablero.getCasillas(), this);
+		                break;
+		            case 5:
+		                tipoCasilla = new TipoCasilla("Interrogante", 5);
+		                tipoCasilla.accionInterrogante();
+		                break;
+		            case 6:
+		                tipoCasilla = new TipoCasilla("Obtener Pez", 6);
+		                tipoCasilla.obtenerPescado();
+		                break;
+		            case 7:
+		                tipoCasilla = new TipoCasilla("Obtener Bolas de Nieve", 7);
+		                tipoCasilla.obtenerBolasdeNieve();
+		                break;
+		            case 8:
+		                tipoCasilla = new TipoCasilla("Obtener Dado", 8);
+		                tipoCasilla.obtenerDadoAleatorio();
+		                break;
+		            case 9:
+		                tipoCasilla = new TipoCasilla("Línea de meta", 9);
+		                tipoCasilla.lineaDeMeta();
+		                break;
+		        }
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		        System.out.println("Error en administrarEventos: " + e.getMessage());
+		    }
 	}
 
 	public void colocarPinguino(int posicion) {

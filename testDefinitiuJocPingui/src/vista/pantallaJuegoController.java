@@ -157,21 +157,6 @@ public class pantallaJuegoController {
 
 	// Button and menu actions
 
-	@FXML
-	private void handleNewGame() {
-
-	}
-
-	@FXML
-	private void handleSaveGame() {
-		System.out.println("Saved game.");
-		// TODO
-	}
-
-	@FXML
-	private void handleLoadGame(ActionEvent Event) {
-
-	}
 
 	@FXML
 	private void handleQuitGame(ActionEvent Event) {

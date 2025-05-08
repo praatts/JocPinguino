@@ -50,25 +50,34 @@ public class TipoCasilla extends Casilla {
 		Alert alerta = null;
 		int pecesJugador = pingu.getInventario().getPeces();
 		System.out.println("¡" + pingu.getNombre() + " se ha encontrado a un oso!");
+		try {
+			Connection con = GuardarConBD.getConexion();
+			int idPartida = GuardarConBD.getIdPartidaCargada();
+			if (pecesJugador >= 2) {
+				System.out.println("¡Jugador +" + pingu.getNombre() + "ha usado dos peces para sobornar al oso!");
+				pingu.getInventario().setPeces(pecesJugador - 2);
+				alerta = new Alert(AlertType.INFORMATION,
+						
+						"Has usado dos peces para sobornar al oso y no has sido penalizado!", ButtonType.OK);
+				alerta.setTitle("Encuentro con el oso!");
+				alerta.setHeaderText(null);
+				alerta.showAndWait();
+				String sqlUpdate = "UPDATE INVENTARIO SET NUM_PECES = NUM_PECES - 2 WHERE idPropietario = " + pingu.getId() + " AND id_partida = " + idPartida;
+				bbdd.update(con, sqlUpdate);
+				con.commit();
+			} else {
+				System.out.println("No tienes suficientes peces para sobornar al oso. Has vuelto al inicio :(");
+				pingu.setPosicion(0);
+				alerta = new Alert(AlertType.WARNING,
+						"No tienes suficientes peces para sobornar al oso. Has vuelto al inicio :(", ButtonType.OK);
+				alerta.setTitle("Encuentro con el oso!");
+				alerta.setHeaderText(null);
+				alerta.showAndWait();
 
-		if (pecesJugador >= 2) {
-			System.out.println("¡Jugador +" + pingu.getNombre() + "ha usado dos peces para sobornar al oso!");
-			pingu.getInventario().setPeces(pecesJugador - 2);
-			alerta = new Alert(AlertType.INFORMATION,
-					"Has usado dos peces para sobornar al oso y no has sido penalizado!", ButtonType.OK);
-			alerta.setTitle("Encuentro con el oso!");
-			alerta.setHeaderText(null);
-			alerta.showAndWait();
-		} else {
-			System.out.println("No tienes suficientes peces para sobornar al oso. Has vuelto al inicio :(");
-			pingu.setPosicion(0);
-			alerta = new Alert(AlertType.WARNING,
-					"No tienes suficientes peces para sobornar al oso. Has vuelto al inicio :(", ButtonType.OK);
-			alerta.setTitle("Encuentro con el oso!");
-			alerta.setHeaderText(null);
-			alerta.showAndWait();
-
-			actualizarPosicionVisual.moveP1(0);
+				actualizarPosicionVisual.moveP1(0);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 	}
@@ -101,7 +110,7 @@ public class TipoCasilla extends Casilla {
 			alerta.setTitle("¡Agujero de Hielo!");
 			alerta.setHeaderText(null);
 			alerta.setContentText(
-					"¡Te has caído en un agujero de hielo!\nRetrocedes a la casilla " + (agujeroAnterior + 1) + " :(");
+					"¡Te has caído en un agujero de hielo!\nRetrocedes a la casilla " + (agujeroAnterior) + " :(");
 
 		} else if (agujeroAnterior == 0) {
 			System.out.println("No se ha encontrado ningún agujero anterior a este, no has sido penalizado");

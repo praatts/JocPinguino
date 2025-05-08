@@ -129,6 +129,7 @@ public class pantallaMenu {
 						controladorJuego.tablero = tablero;
 						controladorJuego.pingu = pingu;
 						controladorJuego.colocarIconos();
+						controladorJuego.moveP1(0);
 						Scene pantallaJuego = new Scene(pantallaJuegoRoot);
 						Stage stage = (Stage) ((Node) Event.getSource()).getScene().getWindow();
 						stage.setScene(pantallaJuego);

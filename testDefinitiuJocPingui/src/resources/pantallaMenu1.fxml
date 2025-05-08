@@ -68,10 +68,13 @@
                 <Button fx:id="partidaExistenteButton" text="CARGAR PARTIDA EXISTENTE"
                         style="-fx-background-color: #5F9EA0; -fx-text-fill: white; -fx-font-size: 13px; -fx-padding: 10 20;" 
                         onAction="#handleLoadGame"/>
-
+				 <Button fx:id="rankingJugadores" text="VER RANKING JUGADORES"
+                        style="-fx-background-color: #5F9EA0; -fx-text-fill: white; -fx-font-size: 13px; -fx-padding: 10 20;" 
+                        onAction="#handleMostrarRankingPartidas"/>
                 <Button fx:id="cerrarSesionButton" text="CERRAR SESIÓN / SALIR"
                         style="-fx-background-color: #5F9EA0; -fx-text-fill: white; -fx-font-size: 13px; -fx-padding: 10 20;" 
                         onAction="#handleQuitGame"/>
+                        
                 
             </children>
         </VBox>

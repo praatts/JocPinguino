@@ -332,10 +332,10 @@ public class pantallaMenu {
 		try {
 			Connection con = GuardarConBD.getConexion();
 			
-			String sqlConsulta = "SELECT nickname, num_partidas_jugadas FROM JUGADOR ORDER BY num_partidas_jugadas BY DESC";
+			String sqlConsulta = "SELECT nickname, num_partidas_jugadas FROM JUGADOR ORDER BY num_partidas_jugadas DESC";
 			ResultSet rs = bbdd.select(con, sqlConsulta);
 			
-			String base = "Ranking de jugadores con más partidas jugadas:\n\n";
+			String base = "\n";
 			while (rs.next()) {
 				String nombre = rs.getString("NICKNAME");
 				int partidasJugadas = rs.getInt("NUM_PARTIDAS_JUGADAS");

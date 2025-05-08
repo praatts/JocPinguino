@@ -362,8 +362,6 @@ public class TipoCasilla extends Casilla {
 				e.printStackTrace();
 			}
 
-			pingu.getInventario().setDados(pingu.getInventario().getDados() + 1);
-
 			alerta = new Alert(AlertType.INFORMATION);
 			alerta.setTitle("Dado añadido al inventario");
 			alerta.setHeaderText(null);

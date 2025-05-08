@@ -279,5 +279,42 @@ public class pantallaMenu {
 
 		Platform.exit();
 	}
+	
+	@FXML
+	public void handleMostrarReglas(ActionEvent Event) {
+		
+		Alert alerta = new Alert (AlertType.INFORMATION);
+		alerta.setTitle("COMO JUGAR / REGLAS DEL JUEGO");
+		alerta.setHeaderText(null);
+		
+		String reglas = "¡BIENVENIDO AL JUEGO DEL PINGUINO, AQUÍ APRENDERÁS A COMO JUGAR Y LAS REGLAS DEL JUEGO!\n\n1. OBJETIVO PRINCIPAL\n -El objetivo principal del juego es llegar a la línea de meta"
+				+ " (representada con una bandera a cuadros) evitando distintos obstaculos como un Oso o Agujeros de hielo en el tablero, pero también cuentas con ayudas como la obtención de pescados o trineos.\n\n"
+				+ "2. EVENTOS\n -Los obstaculos mencionados en el apartado 1 se representan en el juego como eventos, al caer sobre ellos se activaran y ocurrirá dicho evento, sus funciones son las siguietes:\n "
+				+ " 1. OSO:\n Representado con el icono de un oso.\n Tendrás un encuentro con un oso, donde este te devolverá al inicio del tablero, puedes sobornarlo con 2 pescados para no ser penalizado.\n"
+				+ "	2. AGUJERO DE HIELO:\n Representado con un icono de un agujero azul.\n Si caes en uno de ellos serás enviado al anterior agujreo de hielo que se encuentre en el tablero, en caso de no"
+				+ " haber ningúno anterior, no serás penalizado.\n"
+				+ "	3. TRINEO:\n Representado con el icono de un trineo.\n Tendrás la oportunidad de avanzar inmediatamente hasta el siguiente trineo que haya en el tablero, en caso de no haber ningún trineo posterior"
+				+ " tu posición no cambiará y actuará como una casilla normal.\n"
+				+ " 4. OBTENER BOLAS DE NIEVE:\n Representado con el icono de tres bolas de nieve.\n En esta casilla obtendrás aleatoriamente entre 1 a 3 bolas de nieve y puedes almacenar hasta un máximo de 6 bolas de nieve"
+				+ ", estas sirven para retroceder a la foca o jugadores (únicamente"
+				+ " en modo multijugador, en individual no tienen ningúna utilidad.\n"
+				+ " 5. OBTENER PEZ:\n Representado con el icono de un pez.\n En esta casilla obtendrás un pez, podrás almacenar hasta 2 peces, estos podrás usarlos para sobornar al oso y no ser penalizado.\n"
+				+ " 6. OBTENER DADO ALEATORIO:\n Representado con el icono de 2 dados.\n En esta casilla tendrás la probabilidad de conseguir un dado rápido (poder avanzar de 5 a 10 casillas) o un dado lento (poder avanzar"
+				+ " de 1 a 3 casillas), su probabilidad es de 30/70% de obtención (Rápido 30% || Lento 40%), podrás almacenar hasta 3 dados de estos conjuntamente.\n"
+				+ " 7. EVENTO ALEATORIO:\n Representado con el icono de un signo de interrogación. \n En esta casilla se activará un evento aleatorio (entre ellos: Obtener Pez, Obtener Bolas de Nieve y Obtener Dado Especial)."
+				+ "\n\nTodo tu progreso será almacenado automáticamente con el sistema de autoguardado en nuestra base de datos, desde este menú podrás crear una partida completamente nueva o una que hayas jugado"
+				+ " anteriormente y quieras retomarla, también podrás ver el ranking de jugadores con más partidas jugadas. Por último podrás cerrar sesión.\n\n *Cuando te encuentres dentro de la ventana de juego, pulsando en el"
+				+ " desplegable superior izquierdo podrás pulsar en la opción 'Salir' para volver a este menú.";
+		
+		TextArea area = new TextArea(reglas);
+		  area.setWrapText(true);
+		  area.setEditable(false);
+		  
+		  alerta.getDialogPane().setContent(area);
+		  alerta.setResizable(true);
+		  alerta.setHeaderText(null);
+		  alerta.showAndWait();
+		
+	}
 
 }

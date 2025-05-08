@@ -157,7 +157,6 @@ public class pantallaJuegoController {
 
 	// Button and menu actions
 
-
 	@FXML
 	private void handleQuitGame(ActionEvent Event) {
 		Alert alerta = new Alert(Alert.AlertType.INFORMATION);
@@ -175,7 +174,6 @@ public class pantallaJuegoController {
 			pantallaMenu controladorPartidas = loader.getController();
 			controladorPartidas.mostrarNombreLogin(pingu);
 
-			
 			Scene pantallaMPartidasScene = new Scene(pantallaMenuPartidasRoot);
 			// Get the current stage using the event
 			MenuItem menuItem = (MenuItem) Event.getSource();
@@ -184,7 +182,6 @@ public class pantallaJuegoController {
 			System.out.println("Cambiando escena...");
 			stage.setScene(pantallaMPartidasScene);
 			stage.setTitle("Pantalla de Selección de partida");
-			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -287,19 +284,37 @@ public class pantallaJuegoController {
 			alerta.setHeaderText(null);
 			alerta.setContentText("No tienes ningún dado lento disponible");
 		} else {
-			Random r = new Random();
-			int valor = r.nextInt(6) + 5;
+			try {
+				Connection con = GuardarConBD.getConexion();
+				int idPartida = GuardarConBD.getIdPartidaCargada();
+				
+				Random r = new Random();
+				int valor = r.nextInt(6) + 5;
 
-			// Resta al usuario del inventario 1 dado rápido y 1 dado a la cantidad máxima
-			// de dados a almacenar
-			inv.setDadosR(inv.getDadosR() - 1);
-			inv.setDados(inv.getDados() - 1);
+				// Actualización en la base de datos al usar un dado RÁPIDO
+				String sqlUpdatenDados = "UPDATE INVENTARIO SET NUM_DADOESP = NUM_DADOSESP - 1 WHERE idPropietrio = "
+						+ pingu.getId() + " AND id_partida = " + idPartida;
+				bbdd.update(con, sqlUpdatenDados);
 
-			rapido_t.setText("Dado rápido: " + valor);
+				String sqlUpdateDLentos = "UPDATE INVENTARIO SET NUM_DADOSRAPIDOS = NUM_DADOSRAPIDOS - 1 WHERE idPropietario = "
+						+ pingu.getId() + " AND id_partida = " + idPartida;
+				bbdd.update(con, sqlUpdateDLentos);
+				con.commit();
+				
+				// Resta al objeto pinguino del inventario 1 dado rápido y 1 dado a la cantidad máxima
+				// de dados a almacenar
+				
+				inv.setDadosR(inv.getDadosR() - 1);
+				inv.setDados(inv.getDados() - 1);
 
-			pingu.setPosicion(pingu.getPosicion() + valor);
-			moveP1(pingu.getPosicion() + valor);
+				rapido_t.setText("Dado rápido: " + valor);
 
+				pingu.setPosicion(pingu.getPosicion() + valor);
+				moveP1(0);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		actualizarPosicionBaseDeDatos(pingu, idPartida);
@@ -315,18 +330,38 @@ public class pantallaJuegoController {
 			alerta.setHeaderText(null);
 			alerta.setContentText("No tienes ningún dado lento en el inventario");
 		} else {
-			Random r = new Random();
-			int valor = r.nextInt(3) + 1;
+			try {
+				Connection con = GuardarConBD.getConexion();
+				int idPartida = GuardarConBD.getIdPartidaCargada();
 
-			// Resta al usuario del inventario 1 dado rápido y 1 dado a la cantidad máxima
-			// de dados a almacenar
-			inv.setDadosL(inv.getDadosL() - 1);
-			inv.setDados(inv.getDados() - 1);
+				Random r = new Random();
+				int valor = r.nextInt(3) + 1;
 
-			lento_t.setText("Dado lento: " + valor);
+				// Actualización en la base de datos al usar un dado lento
 
-			pingu.setPosicion(pingu.getPosicion() + valor);
-			moveP1(pingu.getPosicion() + valor);
+				String sqlUpdatenDados = "UPDATE INVENTARIO SET NUM_DADOSESP = NUM_DADOSESP - 1 WHERE idPropietrio = "
+						+ pingu.getId() + " AND id_partida = " + idPartida;
+				bbdd.update(con, sqlUpdatenDados);
+
+				String sqlUpdateDLentos = "UPDATE INVENTARIO SET NUM_DADOSLENTOS = NUM_DADOSLENTOS - 1 WHERE idPropietario = "
+						+ pingu.getId() + " AND id_partida = " + idPartida;
+				bbdd.update(con, sqlUpdateDLentos);
+				con.commit();
+
+				// Resta al objeto pinguino del inventario 1 dado lento y 1 dado a la cantidad
+				// máxima
+				// de dados a almacenar
+
+				inv.setDadosL(inv.getDadosL() - 1);
+				inv.setDados(inv.getDados() - 1);
+
+				lento_t.setText("Dado lento: " + valor);
+
+				pingu.setPosicion(pingu.getPosicion() + valor);
+				moveP1(0);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		actualizarPosicionBaseDeDatos(pingu, idPartida);

@@ -299,7 +299,7 @@ public class pantallaJuegoController {
 				int valor = r.nextInt(6) + 5;
 
 				// Actualización en la base de datos al usar un dado RÁPIDO
-				String sqlUpdatenDados = "UPDATE INVENTARIO SET NUM_DADOESP = NUM_DADOSESP - 1 WHERE idPropietrio = "
+				String sqlUpdatenDados = "UPDATE INVENTARIO SET NUM_DADOESP = NUM_DADOSESP - 1 WHERE idPropietario = "
 						+ pingu.getId() + " AND id_partida = " + idPartida;
 				bbdd.update(con, sqlUpdatenDados);
 
@@ -346,7 +346,7 @@ public class pantallaJuegoController {
 
 				// Actualización en la base de datos al usar un dado lento
 
-				String sqlUpdatenDados = "UPDATE INVENTARIO SET NUM_DADOSESP = NUM_DADOSESP - 1 WHERE idPropietrio = "
+				String sqlUpdatenDados = "UPDATE INVENTARIO SET NUM_DADOSESP = NUM_DADOSESP - 1 WHERE idPropietario = "
 						+ pingu.getId() + " AND id_partida = " + idPartida;
 				bbdd.update(con, sqlUpdatenDados);
 

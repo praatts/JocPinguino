@@ -35,26 +35,27 @@
 
         <VBox spacing="15.0" alignment="CENTER">
             <children>
-                <Button fx:id="reglas" text="COMO JUGAR"
+
+            	<Button fx:id="comoJugar" text="COMO JUGAR"
                        	style="-fx-background-color: #00838f; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20; -fx-background-radius: 10;" 
                         onAction="#handleMostrarReglas"/>
-
-                <Button fx:id="nuevaPartidaButton" text="CREAR PARTIDA NUEVA"
-                        style="-fx-background-color: #00838f; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20; -fx-background-radius: 10;" 
-                        onAction="#handleNewGame"/>
+                        
+               <Button fx:id="nuevaPartidaButton" text="CREAR PARTIDA NUEVA"
+                		style="-fx-background-color: #00838f; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20; -fx-background-radius: 10;" 
+                		onAction="#handleNewGame"/>
 
                 <Button fx:id="partidaExistenteButton" text="CARGAR PARTIDA EXISTENTE"
-                        style="-fx-background-color: #00838f; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20; -fx-background-radius: 10;" 
+                       style="-fx-background-color: #00838f; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20; -fx-background-radius: 10;" 
                         onAction="#handleLoadGame"/>
 
 				 <Button fx:id="rankingJugadores" text="VER RANKING JUGADORES"
                         style="-fx-background-color: #00838f; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20; -fx-background-radius: 10;" 
                         onAction="#handleMostrarRankingPartidas"/>
-                        
+
                 <Button fx:id="cerrarSesionButton" text="CERRAR SESIÓN / SALIR"
                         style="-fx-background-color: #00838f; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20; -fx-background-radius: 10;" 
                         onAction="#handleQuitGame"/>
-
+                        
             </children>
         </VBox>
     </children>

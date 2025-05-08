@@ -77,7 +77,6 @@ public class Pinguino {
 		String color;
 		int posicion = 0;
 		boolean nombreRepetido;
-		Inventario inv = new Inventario(0, 0, 0, 0, 0);
 		String tipo = "Jugador";
 
 		System.out.println("Introduzca su nombre");
@@ -109,7 +108,7 @@ public class Pinguino {
 		pingu.setNombre(nombre);
 		pingu.setColor(color);
 		pingu.setPosicion(posicion);
-		pingu.setInventario(inv);
+		pingu.setInventario(null);
 		pingu.setTipo(tipo);
 
 		String sqlInsert = "INSERT INTO JUGADOR (NICKNAME, CONTRASENYA, NUM_PARTIDAS_JUGADAS, COLOR) "

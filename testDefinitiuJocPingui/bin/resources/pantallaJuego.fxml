@@ -56,12 +56,7 @@
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
-            <MenuItem fx:id="newGame" mnemonicParsing="false" text="New" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem fx:id="saveGame" mnemonicParsing="false" text="Save" />
-            <MenuItem fx:id="loadGame" mnemonicParsing="false" text="Load" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem fx:id="quitGame" mnemonicParsing="false" text="Quit" onAction="#handleQuitGame" />
+            <MenuItem fx:id="quitGame" mnemonicParsing="false" text="Salir" onAction="#handleQuitGame" />
           </items>
         </Menu>
       </menus>
@@ -103,17 +98,17 @@
                                     <Font size="30.0" />
                                  </font>
                               </Text>
-                              <Text fx:id="nieve_t" strokeType="OUTSIDE" strokeWidth="0.0" text="Bolas de nieve: 0" AnchorPane.leftAnchor="750.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="30.0">
+                              <Text fx:id="nieve_t" strokeType="OUTSIDE" strokeWidth="0.0" text="Mostrar Inventario" AnchorPane.leftAnchor="750.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="30.0">
                                  <font>
                                     <Font size="30.0" />
                                  </font>
                               </Text>
-                              <Button fx:id="rapido" mnemonicParsing="false" text="Usar" AnchorPane.leftAnchor="55.0" AnchorPane.topAnchor="90.0">
+                              <Button fx:id="rapido" mnemonicParsing="false" onAction="#handleRapido" text="Usar" AnchorPane.leftAnchor="55.0" AnchorPane.topAnchor="90.0">
                                  <font>
                                     <Font size="30.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="lento" layoutX="65.0" layoutY="100.0" mnemonicParsing="false" text="Usar" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="90.0">
+                              <Button fx:id="lento" layoutX="65.0" layoutY="100.0" mnemonicParsing="false" onAction="#handleLento"  text="Usar" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="90.0">
                                  <font>
                                     <Font size="30.0" />
                                  </font>
@@ -123,7 +118,7 @@
                                     <Font size="30.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="inventario" layoutX="85.0" layoutY="120.0" mnemonicParsing="false" onAction="#handleMostrarInventario" text="Mostrar Inventario" AnchorPane.leftAnchor="810.0" AnchorPane.topAnchor="90.0">
+                              <Button fx:id="inventario" layoutX="85.0" layoutY="120.0" mnemonicParsing="false" onAction="#handleMostrarInventario" text="Mostrar" AnchorPane.leftAnchor="810.0" AnchorPane.topAnchor="90.0">
                                  <font>
                                     <Font size="30.0" />
                                  </font>
@@ -171,7 +166,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Start">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="">
                      <font>
                         <Font size="30.0" />
                      </font>
@@ -185,18 +180,7 @@
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin></Circle>
-                  <Circle fx:id="P2" fill="RED" radius="15.0" stroke="BLACK" strokeType="INSIDE">
-                     <GridPane.margin>
-                        <Insets left="40.0" />
-                     </GridPane.margin></Circle>
-                  <Circle fx:id="P3" fill="GREEN" radius="15.0" stroke="BLACK" strokeType="INSIDE">
-                     <GridPane.margin>
-                        <Insets left="80.0" />
-                     </GridPane.margin></Circle>
-                  <Circle fx:id="P4" fill="YELLOW" radius="15.0" stroke="BLACK" strokeType="INSIDE">
-                     <GridPane.margin>
-                        <Insets left="120.0" />
-                     </GridPane.margin></Circle>
+         
                </children>
             </GridPane>
          </center>

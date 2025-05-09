@@ -44,7 +44,7 @@ public class pantallaMenu {
 		try {
 			Connection con = GuardarConBD.getConexion();
 			Pinguino pingu = GuardarConBD.getPinguino();
-
+			con.setAutoCommit(false);
 			String sqlConsulta = "SELECT idPartida FROM partida WHERE estado = 'en curso' AND idcreador = "
 					+ pingu.getId() + " ORDER BY idPartida ASC";
 			ResultSet rs = bbdd.select(con, sqlConsulta);

@@ -289,7 +289,8 @@ public class pantallaJuegoController {
 			Alert alerta = new Alert(Alert.AlertType.WARNING);
 			alerta.setTitle("Cantidad de dados insuficientes");
 			alerta.setHeaderText(null);
-			alerta.setContentText("No tienes ningún dado lento disponible");
+			alerta.setContentText("No tienes ningún dado rápido disponible");
+			alerta.showAndWait();
 		} else {
 			try {
 				Connection con = GuardarConBD.getConexion();
@@ -323,7 +324,7 @@ public class pantallaJuegoController {
 				e.printStackTrace();
 			}
 		}
-
+		
 		actualizarPosicionBaseDeDatos(pingu, idPartida);
 	}
 
@@ -336,6 +337,7 @@ public class pantallaJuegoController {
 			alerta.setTitle("Cantidad de dados insuficientes");
 			alerta.setHeaderText(null);
 			alerta.setContentText("No tienes ningún dado lento en el inventario");
+			alerta.showAndWait();
 		} else {
 			try {
 				Connection con = GuardarConBD.getConexion();

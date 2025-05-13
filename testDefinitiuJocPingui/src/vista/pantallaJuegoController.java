@@ -290,6 +290,7 @@ public class pantallaJuegoController {
 			alerta.setTitle("Cantidad de dados insuficientes");
 			alerta.setHeaderText(null);
 			alerta.setContentText("No tienes ningún dado lento disponible");
+			alerta.showAndWait();
 		} else {
 			try {
 				Connection con = GuardarConBD.getConexion();
@@ -336,6 +337,7 @@ public class pantallaJuegoController {
 			alerta.setTitle("Cantidad de dados insuficientes");
 			alerta.setHeaderText(null);
 			alerta.setContentText("No tienes ningún dado lento en el inventario");
+			alerta.showAndWait();
 		} else {
 			try {
 				Connection con = GuardarConBD.getConexion();

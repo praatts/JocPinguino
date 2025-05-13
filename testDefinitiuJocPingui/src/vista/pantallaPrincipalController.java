@@ -11,6 +11,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -125,6 +127,7 @@ public class pantallaPrincipalController {
 	private void handleLogin(ActionEvent event) {
 		String usuario = userField.getText().trim();
 		String contrasenya = passField.getText().trim();
+		GuardarConBD.setNickname(usuario);
 
 		System.out.println("Login pressed: " + usuario + " / " + contrasenya);
 
@@ -182,7 +185,7 @@ public class pantallaPrincipalController {
 
 		if (usuario.isEmpty() || contrasenya.isEmpty() || color.isEmpty()) {
 			mostrarAlerta("Error", "Por favor, rellena todos los campos para hacer el registro.");
-			
+
 		} else if (!usuario.isEmpty() && !contrasenya.isEmpty() && !color.isEmpty()) {
 			try {
 				Connection con = GuardarConBD.getConexion();
@@ -244,7 +247,42 @@ public class pantallaPrincipalController {
 		alert.setContentText(msg);
 		alert.showAndWait();
 	}
-	
-	
 
-}
+	public String asignarColorCirculo() {
+		try {
+			Connection con = GuardarConBD.getConexion();
+			String nombre = GuardarConBD.getNickname();
+
+			String sql = "SELECT color FROM jugador WHERE nickname = '" + nombre + "'";
+	        ResultSet rs = bbdd.select(con, sql);
+	        if (rs.next()) {
+	            String color = rs.getString("COLOR");
+
+	            switch (color.toLowerCase()) {
+	                case "amarillo":
+	                    return "#FFFF00";
+	                case "azul":
+	                    return "#0000FF";
+	                case "morado":
+	                    return "#572364";
+	                case "naranja":
+	                    return "#FFA500";
+	                case "rojo":
+	                    return "#F80000";
+	                case "rosa":
+	                    return "#FF0080";
+	                case "verde":
+	                    return "#008F39";
+	                default:
+	                    return "#FFFFFF";
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return "#FFFFFF";
+	}
+
+	}
+

@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -77,19 +78,20 @@ public class pantallaJuegoController {
 	private Circle P3;
 	@FXML
 	private Circle P4;
-
+	private String p1Color;
 	// ONLY FOR TESTING!!!
 	private int p1Position = 0; // Tracks current position (from 0 to 49 in a 5x10 grid)
 	private final int COLUMNS = 5;
 	public Pinguino pingu = GuardarConBD.getPinguino();
 	public int idPartida;
 	public Tablero tablero;
-
+	private pantallaPrincipalController asignColor = new pantallaPrincipalController();
+	private String colorP1 = asignColor.asignarColorCirculo();
 	@FXML
 	private void initialize() {
 		// This method is called automatically after the FXML is loaded
 		// You can set initial values or add listeners here
-
+		P1.setFill(Color.web(colorP1));
 	}
 
 	public void colocarIconos() {
@@ -289,7 +291,7 @@ public class pantallaJuegoController {
 			Alert alerta = new Alert(Alert.AlertType.WARNING);
 			alerta.setTitle("Cantidad de dados insuficientes");
 			alerta.setHeaderText(null);
-			alerta.setContentText("No tienes ningún dado lento disponible");
+			alerta.setContentText("No tienes ningún dado rápido disponible");
 			alerta.showAndWait();
 		} else {
 			try {
@@ -324,7 +326,7 @@ public class pantallaJuegoController {
 				e.printStackTrace();
 			}
 		}
-
+		
 		actualizarPosicionBaseDeDatos(pingu, idPartida);
 	}
 

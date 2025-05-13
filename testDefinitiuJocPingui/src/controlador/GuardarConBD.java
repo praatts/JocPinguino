@@ -7,7 +7,16 @@ public class GuardarConBD {
 	private static Pinguino pinguino;
 	private static int idPartidaCargada;
 	private static Tablero tableroCargado;
+	private static String nickname;
 	
+	public static String getNickname() {
+		return nickname;
+	}
+
+	public static void setNickname(String nickname) {
+		GuardarConBD.nickname = nickname;
+	}
+
 	public static void setTableroCargado(Tablero tablero) {
 	    if (tablero == null) {
 	        System.out.println("Advertencia: Intentando asignar un tablero null a GuardarConBD.");

@@ -137,7 +137,10 @@ public class pantallaJuegoController {
 			case 10:
 				iconoEvento = setIcono("/resources/motoNieve.png");
 				break;
-			default:
+			case 11:
+				iconoEvento = setIcono("/resources/sueloQuebradizo.png");
+				break;
+				default:
 				break;
 			}
 
@@ -198,12 +201,21 @@ public class pantallaJuegoController {
 	private void handleDado(ActionEvent event) {
 		Random rand = new Random();
 		int diceResult = rand.nextInt(6) + 1;
-
+		TipoCasilla turno = new TipoCasilla("", 0);
 		// Update the Text
 		dadoResultText.setText("Ha salido: " + diceResult);
 
 		// Update the position
-		moveP1(diceResult);
+		
+		if (GuardarConBD.getPierdeTurno()) {
+			Alert alerta = new Alert(AlertType.INFORMATION);
+			alerta.setTitle("Turno perdido");
+			alerta.setContentText("Perdiste el turno por el suelo quebradizo. En el próximo lanzamiento podrás avanzar.");
+			alerta.showAndWait();
+			GuardarConBD.setPierdeTurno(false);
+		} else {
+			moveP1(diceResult);
+		}
 	}
 
 	public void moveP1(int steps) {
@@ -272,6 +284,10 @@ public class pantallaJuegoController {
 			case 10:
 				tipoCasilla = new TipoCasilla("Moto de nieve", 10);
 				tipoCasilla.motoNieve(pingu, tablero.getCasillas(), this);
+				break;
+			case 11:
+				tipoCasilla = new TipoCasilla("Suelo Quebradizo", 10);
+				tipoCasilla.sueloQuebradizo(this);;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -78,6 +78,9 @@ public class Tablero {
 			case 10:
 				evt = new Evento (10, "Moto de nieve");
 				break;
+			case 11:
+				evt = new Evento (11, "Suelo Quebradizo");
+				break;
 			default:
 				if (casillasVacias < 25) {
 				evt = new Evento (1, "Casilla vacía");

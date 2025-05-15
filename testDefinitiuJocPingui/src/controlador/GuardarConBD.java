@@ -8,6 +8,15 @@ public class GuardarConBD {
 	private static int idPartidaCargada;
 	private static Tablero tableroCargado;
 	private static String nickname;
+	private static boolean pierdeTurno = false;
+
+	public static boolean getPierdeTurno() {
+		return pierdeTurno;
+	}
+
+	public static void setPierdeTurno(boolean valor) {
+		pierdeTurno = valor;
+	}
 	
 	public static String getNickname() {
 		return nickname;

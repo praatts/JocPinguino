@@ -209,7 +209,8 @@ public class pantallaMenu {
 			Parent pantallaJuegoRoot = loader.load();
 
 			pantallaJuegoController controladorJuego = loader.getController();
-			controladorJuego.tablero = tablero; // Asegúrate de que "tablero" está definido
+			pingu.setPosicion(0);
+			controladorJuego.tablero = tablero;
 			controladorJuego.pingu = pingu;
 			controladorJuego.colocarIconos();
 			Scene pantallaJuego = new Scene(pantallaJuegoRoot);

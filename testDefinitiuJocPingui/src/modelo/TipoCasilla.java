@@ -399,4 +399,48 @@ public class TipoCasilla extends Casilla {
 		}
 
 	}
+	
+	public void motoNieve(Pinguino pingu, ArrayList<Evento> casillas,
+			pantallaJuegoController actualizarPosicionVisual) {
+		int motoActual = pingu.getPosicion();
+		int trineoDestino = 0;
+		boolean trineoDestinoEncontrado = false;
+		Alert alerta = null;
+
+		if (motoActual > 0 && casillas.get(motoActual).getIDEvento() == 10) {
+			System.out.println("Has caído en un trineo!");
+			for (int j = motoActual + 1; j < casillas.size(); j++) {
+				if (!trineoDestinoEncontrado && casillas.get(j).getIDEvento() == 4) {
+					trineoDestino = j;
+					trineoDestinoEncontrado = true;
+				}
+
+			}
+		}
+
+		if (trineoDestinoEncontrado && trineoDestino != 0) {
+
+			System.out.println("Has avanzado " + (trineoDestino - motoActual) + " casillas!");
+			pingu.setPosicion(trineoDestino);
+			alerta = new Alert(Alert.AlertType.INFORMATION);
+			alerta.setTitle("¡Moto de nieve encontrada!");
+			alerta.setHeaderText(null);
+			alerta.setContentText(
+					"¡Has encontrado una moto de nieve!\nAvanzas hasta el trineo más próximo que se encuentra en la casilla "
+							+ (trineoDestino) + ".");
+			alerta.showAndWait();
+
+			pingu.setPosicion(trineoDestino);
+			actualizarPosicionVisual.colocarPinguino(trineoDestino);
+			actualizarPosicionVisual.actualizarPosicionBaseDeDatos(pingu, actualizarPosicionVisual.idPartida);
+		} else if (trineoDestino == 0) {
+			System.out.println("No se ha encontrado ningún trineo por delante de la moto de nieve, no has avanzado ninguna casilla");
+			alerta = new Alert(Alert.AlertType.INFORMATION);
+			alerta.setTitle("¡Trineo no encontrado!");
+			alerta.setHeaderText(null);
+			alerta.setContentText("No hay ningún trineo posterior a la moto de nieve, no avanzas ninguna casilla!");
+			alerta.showAndWait();
+		}
+		
+	}
 }

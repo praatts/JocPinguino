@@ -269,6 +269,9 @@ public class pantallaJuegoController {
 				tipoCasilla = new TipoCasilla("Línea de meta", 9);
 				tipoCasilla.lineaDeMeta();
 				break;
+			case 10:
+				tipoCasilla = new TipoCasilla("Moto de nieve", 10);
+				tipoCasilla.motoNieve(pingu, tablero.getCasillas(), this);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

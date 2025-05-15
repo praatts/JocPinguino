@@ -443,4 +443,20 @@ public class TipoCasilla extends Casilla {
 		}
 		
 	}
+	
+	public void sueloQuebradizo() {
+		int totalObjetos = pingu.getInventario().getDados() + pingu.getInventario().getBolasDeNieve() + pingu.getInventario().getPeces();
+		Alert alerta = new Alert(AlertType.WARNING);
+		alerta.setTitle("Suelo Quebradizo!");
+		if (totalObjetos == 0) {
+			alerta.setContentText("Has caido en una casilla con suelo quebradizo, pero no tenías ningún objeto y no has sido penalizado!");
+			
+		} else if (totalObjetos >= 1 && totalObjetos <= 5) {
+			alerta.setContentText("Has caído en una casilla con suelo quebradizo, al tener menos de 5 objetos pierdes un turno, lanza el dado para perder el turno!");
+		} else {
+			alerta.setContentText("Has caído en una casilla con suelo quebradizo), al tener más de 5 objetos regresas al inicio :(");
+			pingu.setPosicion(0);
+			actualizarPosicionVisual.moveP1(0);
+		}
+	}
 }

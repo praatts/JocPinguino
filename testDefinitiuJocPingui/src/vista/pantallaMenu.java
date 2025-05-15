@@ -185,6 +185,9 @@ public class pantallaMenu {
 		case "Moto de nieve":
 			evt = new Evento(10, "Moto de nieve");
 			break;
+		case "Suelo Quebradizo":
+			evt = new Evento(11, "Suelo Quebradizo");
+			break;
 		default:
 			break;
 		}

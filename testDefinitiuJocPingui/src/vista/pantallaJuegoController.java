@@ -87,6 +87,7 @@ public class pantallaJuegoController {
 	public Tablero tablero;
 	private pantallaPrincipalController asignColor = new pantallaPrincipalController();
 	private String colorP1 = asignColor.asignarColorCirculo();
+
 	@FXML
 	private void initialize() {
 		// This method is called automatically after the FXML is loaded
@@ -132,6 +133,9 @@ public class pantallaJuegoController {
 				break;
 			case 9:
 				iconoEvento = setIcono("/resources/finish.png");
+				break;
+			case 10:
+				iconoEvento = setIcono("/resources/motoNieve.png");
 				break;
 			default:
 				break;
@@ -225,51 +229,51 @@ public class pantallaJuegoController {
 	}
 
 	private void administrarEventos(int posicion) {
-		 try {
-		        tablero = GuardarConBD.getTableroCargado();
-		        Evento evento = tablero.getCasillas().get(posicion);
-		       
-		        TipoCasilla tipoCasilla = new TipoCasilla("vacío", 0);
-		        System.out.println("Evento ID: " + evento.getIDEvento());
-		        switch (evento.getIDEvento()) {
-		        
-		            case 2:
-		                tipoCasilla = new TipoCasilla("Oso", 2);
-		                tipoCasilla.casillaOso(this);
-		                break;
-		            case 3:
-		                tipoCasilla = new TipoCasilla("Agujero de Hielo", 3);
-		                tipoCasilla.casillaAgujeroHielo(tablero.getCasillas(), this);
-		                break;
-		            case 4:
-		                tipoCasilla = new TipoCasilla("Trineo", 4);
-		                tipoCasilla.casillaTrineo(pingu, tablero.getCasillas(), this);
-		                break;
-		            case 5:
-		                tipoCasilla = new TipoCasilla("Interrogante", 5);
-		                tipoCasilla.accionInterrogante();
-		                break;
-		            case 6:
-		                tipoCasilla = new TipoCasilla("Obtener Pez", 6);
-		                tipoCasilla.obtenerPescado();
-		                break;
-		            case 7:
-		                tipoCasilla = new TipoCasilla("Obtener Bolas de Nieve", 7);
-		                tipoCasilla.obtenerBolasdeNieve();
-		                break;
-		            case 8:
-		                tipoCasilla = new TipoCasilla("Obtener Dado", 8);
-		                tipoCasilla.obtenerDadoAleatorio();
-		                break;
-		            case 9:
-		                tipoCasilla = new TipoCasilla("Línea de meta", 9);
-		                tipoCasilla.lineaDeMeta();
-		                break;
-		        }
-		    } catch (Exception e) {
-		        e.printStackTrace();
-		        System.out.println("Error en administrarEventos: " + e.getMessage());
-		    }
+		try {
+			tablero = GuardarConBD.getTableroCargado();
+			Evento evento = tablero.getCasillas().get(posicion);
+
+			TipoCasilla tipoCasilla = new TipoCasilla("vacío", 0);
+			System.out.println("Evento ID: " + evento.getIDEvento());
+			switch (evento.getIDEvento()) {
+
+			case 2:
+				tipoCasilla = new TipoCasilla("Oso", 2);
+				tipoCasilla.casillaOso(this);
+				break;
+			case 3:
+				tipoCasilla = new TipoCasilla("Agujero de Hielo", 3);
+				tipoCasilla.casillaAgujeroHielo(tablero.getCasillas(), this);
+				break;
+			case 4:
+				tipoCasilla = new TipoCasilla("Trineo", 4);
+				tipoCasilla.casillaTrineo(pingu, tablero.getCasillas(), this);
+				break;
+			case 5:
+				tipoCasilla = new TipoCasilla("Interrogante", 5);
+				tipoCasilla.accionInterrogante();
+				break;
+			case 6:
+				tipoCasilla = new TipoCasilla("Obtener Pez", 6);
+				tipoCasilla.obtenerPescado();
+				break;
+			case 7:
+				tipoCasilla = new TipoCasilla("Obtener Bolas de Nieve", 7);
+				tipoCasilla.obtenerBolasdeNieve();
+				break;
+			case 8:
+				tipoCasilla = new TipoCasilla("Obtener Dado", 8);
+				tipoCasilla.obtenerDadoAleatorio();
+				break;
+			case 9:
+				tipoCasilla = new TipoCasilla("Línea de meta", 9);
+				tipoCasilla.lineaDeMeta();
+				break;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Error en administrarEventos: " + e.getMessage());
+		}
 	}
 
 	public void colocarPinguino(int posicion) {
@@ -297,7 +301,7 @@ public class pantallaJuegoController {
 			try {
 				Connection con = GuardarConBD.getConexion();
 				int idPartida = GuardarConBD.getIdPartidaCargada();
-				
+
 				Random r = new Random();
 				int valor = r.nextInt(6) + 5;
 
@@ -310,10 +314,11 @@ public class pantallaJuegoController {
 						+ pingu.getId() + " AND id_partida = " + idPartida;
 				bbdd.update(con, sqlUpdateDLentos);
 				con.commit();
-				
-				// Resta al objeto pinguino del inventario 1 dado rápido y 1 dado a la cantidad máxima
+
+				// Resta al objeto pinguino del inventario 1 dado rápido y 1 dado a la cantidad
+				// máxima
 				// de dados a almacenar
-				
+
 				inv.setDadosR(inv.getDadosR() - 1);
 				inv.setDados(inv.getDados() - 1);
 
@@ -326,7 +331,7 @@ public class pantallaJuegoController {
 				e.printStackTrace();
 			}
 		}
-		
+
 		actualizarPosicionBaseDeDatos(pingu, idPartida);
 	}
 

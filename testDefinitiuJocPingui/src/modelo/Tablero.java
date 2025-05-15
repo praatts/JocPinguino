@@ -34,7 +34,7 @@ public class Tablero {
 		int generador = 0;
 		int contadorOso = 0;
 		Random r = new Random();
-		int casillasVacias = 0;
+		int casillasVacias = 2;
 		
 		
 		while (casillas.size() < totalCasillas - 1) {
@@ -74,6 +74,9 @@ public class Tablero {
 				break;
 			case 9:
 				evt = new Evento (8, "Obtener dado");
+				break;
+			case 10:
+				evt = new Evento (10, "Moto de nieve");
 				break;
 			default:
 				if (casillasVacias < 25) {

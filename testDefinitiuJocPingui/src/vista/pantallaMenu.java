@@ -182,6 +182,9 @@ public class pantallaMenu {
 		case "Línea de meta":
 			evt = new Evento(9, "Línea de meta");
 			break;
+		case "Moto de nieve":
+			evt = new Evento(10, "Moto de nieve");
+			break;
 		default:
 			break;
 		}

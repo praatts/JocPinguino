@@ -80,6 +80,7 @@ public class Tablero {
 				break;
 			case 11:
 				evt = new Evento (11, "Suelo Quebradizo");
+				break;
 			default:
 				if (casillasVacias < 25) {
 				evt = new Evento (1, "Casilla vacía");

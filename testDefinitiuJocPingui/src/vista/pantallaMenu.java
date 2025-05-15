@@ -338,21 +338,21 @@ public class pantallaMenu {
 	public void handleMostrarRankingPartidas(ActionEvent Event) {
 		try {
 			Connection con = GuardarConBD.getConexion();
-			
+
 			String sqlConsulta = "SELECT nickname, num_partidas_jugadas FROM JUGADOR ORDER BY num_partidas_jugadas DESC";
 			ResultSet rs = bbdd.select(con, sqlConsulta);
-			
+
 			String base = "\n";
 			while (rs.next()) {
 				String nombre = rs.getString("NICKNAME");
 				int partidasJugadas = rs.getInt("NUM_PARTIDAS_JUGADAS");
-				
+
 				base += nombre + " -> " + partidasJugadas + " partidas jugadas\n";
-				
+
 			}
-			
+
 			rs.close();
-			
+
 			Alert alerta = new Alert(AlertType.INFORMATION);
 			alerta.setTitle("Ranking de jugadores");
 			alerta.setHeaderText("Ranking de jugadores con más partidas jugadas");
@@ -362,9 +362,5 @@ public class pantallaMenu {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
-	
 
 }

@@ -18,6 +18,7 @@ public class TipoCasilla extends Casilla {
 	private String tipo;
 	private int id;
 	private pantallaJuegoController actualizarPosicionVisual;
+	private boolean pierdeTurno = false;
 
 	// Constructor
 
@@ -161,7 +162,7 @@ public class TipoCasilla extends Casilla {
 			alerta.setHeaderText(null);
 			alerta.setContentText(
 					"¡Has encontrado un trineo!\nAvanzas hasta el siguiente trineo que se encuentra en la casilla "
-							+ (trineoSiguiente) + ".");
+							+ (trineoSiguiente + 1) + ".");
 			alerta.showAndWait();
 
 			pingu.setPosicion(trineoSiguiente);
@@ -427,7 +428,7 @@ public class TipoCasilla extends Casilla {
 			alerta.setHeaderText(null);
 			alerta.setContentText(
 					"¡Has encontrado una moto de nieve!\nAvanzas hasta el trineo más próximo que se encuentra en la casilla "
-							+ (trineoDestino) + ".");
+							+ (trineoDestino + 1) + ".");
 			alerta.showAndWait();
 
 			pingu.setPosicion(trineoDestino);
@@ -444,19 +445,24 @@ public class TipoCasilla extends Casilla {
 		
 	}
 	
-	public void sueloQuebradizo() {
+	public void sueloQuebradizo(pantallaJuegoController controlador) {
 		int totalObjetos = pingu.getInventario().getDados() + pingu.getInventario().getBolasDeNieve() + pingu.getInventario().getPeces();
 		Alert alerta = new Alert(AlertType.WARNING);
+
 		alerta.setTitle("Suelo Quebradizo!");
 		if (totalObjetos == 0) {
 			alerta.setContentText("Has caido en una casilla con suelo quebradizo, pero no tenías ningún objeto y no has sido penalizado!");
 			
 		} else if (totalObjetos >= 1 && totalObjetos <= 5) {
 			alerta.setContentText("Has caído en una casilla con suelo quebradizo, al tener menos de 5 objetos pierdes un turno, lanza el dado para perder el turno!");
+			GuardarConBD.setPierdeTurno(true);
+
 		} else {
 			alerta.setContentText("Has caído en una casilla con suelo quebradizo), al tener más de 5 objetos regresas al inicio :(");
 			pingu.setPosicion(0);
-			actualizarPosicionVisual.moveP1(0);
+			controlador.moveP1(0);
 		}
+		
+		alerta.showAndWait();
 	}
 }

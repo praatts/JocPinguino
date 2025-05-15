@@ -38,7 +38,6 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -56,7 +55,7 @@
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
-            <MenuItem fx:id="quitGame" mnemonicParsing="false" text="Salir" onAction="#handleQuitGame" />
+            <MenuItem fx:id="quitGame" mnemonicParsing="false" onAction="#handleQuitGame" text="Salir" />
           </items>
         </Menu>
       </menus>
@@ -72,16 +71,16 @@
                     <Font size="32.0" />
                   </font>
                 </Text>
-                <Button fx:id="dado" layoutY="58.0" text="Dado" onAction="#handleDado" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="100.0">
+                <Button fx:id="dado" layoutY="58.0" onAction="#handleDado" text="Dado" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="100.0">
                   <font>
                     <Font size="25.0" />
                   </font>
                 </Button>
               </children>
             </AnchorPane>
-            <ScrollPane minHeight="200.0" minWidth="680.0" vbarPolicy="NEVER">
+            <ScrollPane minHeight="200.0" minWidth="680.0" prefHeight="200.0" prefWidth="992.0" vbarPolicy="NEVER">
               <content>
-                <AnchorPane>
+                <AnchorPane prefHeight="155.0" prefWidth="848.0">
                   <children>
                     <Text fx:id="rapido_t" text="Dado rápido: 0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="30.0">
                       <font>
@@ -98,17 +97,17 @@
                         <Font size="30.0" />
                       </font>
                     </Text>
-                    <Text fx:id="nieve_t" text="Mostrar Inventario" AnchorPane.leftAnchor="750.0" AnchorPane.topAnchor="30.0">
+                    <Text fx:id="nieve_t" layoutX="701.0" layoutY="62.0" text="Inventario" AnchorPane.leftAnchor="701.0" AnchorPane.topAnchor="29.626953125">
                       <font>
                         <Font size="30.0" />
                       </font>
                     </Text>
-                    <Button fx:id="rapido" text="Usar" onAction="#handleRapido" AnchorPane.leftAnchor="55.0" AnchorPane.topAnchor="90.0">
+                    <Button fx:id="rapido" onAction="#handleRapido" text="Usar" AnchorPane.leftAnchor="55.0" AnchorPane.topAnchor="90.0">
                       <font>
                         <Font size="30.0" />
                       </font>
                     </Button>
-                    <Button fx:id="lento" text="Usar" onAction="#handleLento" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="90.0">
+                    <Button fx:id="lento" onAction="#handleLento" text="Usar" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="90.0">
                       <font>
                         <Font size="30.0" />
                       </font>
@@ -118,7 +117,7 @@
                         <Font size="30.0" />
                       </font>
                     </Button>
-                    <Button fx:id="inventario" text="Mostrar" onAction="#handleMostrarInventario" AnchorPane.leftAnchor="810.0" AnchorPane.topAnchor="90.0">
+                    <Button fx:id="inventario" layoutX="695.0" layoutY="90.0" onAction="#handleMostrarInventario" prefHeight="65.0" prefWidth="144.0" text="Mostrar" AnchorPane.leftAnchor="695.0" AnchorPane.topAnchor="90.0">
                       <font>
                         <Font size="30.0" />
                       </font>
@@ -127,20 +126,11 @@
                 </AnchorPane>
               </content>
             </ScrollPane>
-            <AnchorPane minHeight="200.0" minWidth="300.0">
-              <children>
-                <Text fx:id="eventos" text="Evento ocurrido" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="30.0">
-                  <font>
-                    <Font size="18.0" />
-                  </font>
-                </Text>
-              </children>
-            </AnchorPane>
           </children>
         </HBox>
       </bottom>
-      <center>
-        <GridPane fx:id="gridPaneTablero" style="-fx-background-color: #E0F7FA;" gridLinesVisible="true" prefHeight="500.0" BorderPane.alignment="CENTER">
+         <top>
+        <GridPane fx:id="gridPaneTablero" gridLinesVisible="true" prefHeight="500.0" style="-fx-background-color: #E0F7FA;" BorderPane.alignment="CENTER">
           <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" prefWidth="100.0" />
@@ -161,20 +151,271 @@
             <RowConstraints prefHeight="30.0" vgrow="SOMETIMES" />
           </rowConstraints>
           <children>
-            <Text text="">
+            <Text opacity="0.5" text="1" textAlignment="CENTER" wrappingWidth="31.0" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM">
               <font>
-                <Font size="30.0" />
+                <Font name="Consolas Bold" size="20.0" />
               </font>
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
             </Text>
-            <Text text="" GridPane.columnIndex="4" GridPane.rowIndex="9" GridPane.halignment="RIGHT">
+            <Text text="" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="9">
               <font>
                 <Font size="30.0" />
               </font>
             </Text>
             <Circle fx:id="P1" fill="BLUE" radius="15.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Text layoutX="235.0" layoutY="42.0" opacity="0.5" text="6" textAlignment="CENTER" wrappingWidth="31.0" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="10.0" layoutY="92.0" opacity="0.5" text="11" textAlignment="CENTER" wrappingWidth="31.0" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="10.0" layoutY="142.0" opacity="0.5" text="21" textAlignment="CENTER" wrappingWidth="31.0" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text opacity="0.5" text="16" textAlignment="CENTER" wrappingWidth="31.0" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="10.0" layoutY="142.0" opacity="0.5" text="26" textAlignment="CENTER" wrappingWidth="31.0" GridPane.halignment="RIGHT" GridPane.rowIndex="5" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="10.0" layoutY="242.0" opacity="0.5" text="31" textAlignment="CENTER" wrappingWidth="31.0" GridPane.halignment="RIGHT" GridPane.rowIndex="6" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text opacity="0.5" text="36" textAlignment="CENTER" wrappingWidth="31.0" GridPane.halignment="RIGHT" GridPane.rowIndex="7" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text opacity="0.5" text="41" textAlignment="CENTER" wrappingWidth="31.0" GridPane.halignment="RIGHT" GridPane.rowIndex="8" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text opacity="0.5" text="46" textAlignment="CENTER" wrappingWidth="31.0" GridPane.halignment="RIGHT" GridPane.rowIndex="9" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="10.0" layoutY="142.0" opacity="0.5" text="2" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text opacity="0.5" text="7" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="10.0" layoutY="142.0" opacity="0.5" text="17" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="10.0" layoutY="142.0" opacity="0.5" text="12" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="10.0" layoutY="142.0" opacity="0.5" text="32" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="10.0" layoutY="142.0" opacity="0.5" text="27" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="10.0" layoutY="142.0" opacity="0.5" text="22" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="10.0" layoutY="142.0" opacity="0.5" text="5" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="10.0" layoutY="142.0" opacity="0.5" text="47" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="9" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="10.0" layoutY="142.0" opacity="0.5" text="42" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="8" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="10.0" layoutY="142.0" opacity="0.5" text="37" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="7" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="10.0" layoutY="142.0" opacity="0.5" text="30" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="5" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="10.0" layoutY="142.0" opacity="0.5" text="25" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="10.0" layoutY="142.0" opacity="0.5" text="20" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="10.0" layoutY="142.0" opacity="0.5" text="15" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="10.0" layoutY="142.0" opacity="0.5" text="10" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="235.0" layoutY="40.0" opacity="0.5" text="40" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="7" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="235.0" layoutY="40.0" opacity="0.5" text="45" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="8" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="235.0" layoutY="40.0" opacity="0.5" text="50" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="9" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="235.0" layoutY="40.0" opacity="0.5" text="35" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="6" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="235.0" layoutY="40.0" opacity="0.5" text="49" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="9" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="235.0" layoutY="40.0" opacity="0.5" text="48" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="9" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="235.0" layoutY="40.0" opacity="0.5" text="44" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="8" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="235.0" layoutY="40.0" opacity="0.5" text="43" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="8" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="235.0" layoutY="40.0" opacity="0.5" text="39" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="7" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="235.0" layoutY="40.0" opacity="0.5" text="38" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="7" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="235.0" layoutY="40.0" opacity="0.5" text="34" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="6" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="235.0" layoutY="40.0" opacity="0.5" text="33" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="6" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="235.0" layoutY="40.0" opacity="0.5" text="29" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="5" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="235.0" layoutY="40.0" opacity="0.5" text="28" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="5" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="235.0" layoutY="40.0" opacity="0.5" text="24" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="235.0" layoutY="40.0" opacity="0.5" text="23" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="235.0" layoutY="40.0" opacity="0.5" text="19" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="235.0" layoutY="40.0" opacity="0.5" text="18" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="235.0" layoutY="40.0" opacity="0.5" text="14" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="235.0" layoutY="40.0" opacity="0.5" text="13" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="235.0" layoutY="40.0" opacity="0.5" text="9" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="235.0" layoutY="40.0" opacity="0.5" text="8" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="235.0" layoutY="40.0" opacity="0.5" text="4" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="235.0" layoutY="40.0" opacity="0.5" text="3" textAlignment="CENTER" wrappingWidth="31.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Consolas Bold" size="20.0" />
+                     </font>
+                  </Text>
           </children>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
         </GridPane>
-      </center>
+         </top>
     </BorderPane>
   </children>
 </VBox>

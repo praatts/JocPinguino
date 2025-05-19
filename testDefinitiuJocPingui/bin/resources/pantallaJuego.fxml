@@ -60,7 +60,7 @@
         </Menu>
       </menus>
     </MenuBar>
-    <BorderPane>
+    <BorderPane style="-fx-background-color: #E0F7FA;">
       <bottom>
         <HBox BorderPane.alignment="CENTER">
           <children>

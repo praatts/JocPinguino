@@ -45,9 +45,9 @@ public class pantallaJuegoController {
 	@FXML
 	private Button dado;
 	@FXML
-	private Button rapido;
+	public Button rapido;
 	@FXML
-	private Button lento;
+	public Button lento;
 	@FXML
 	private Button peces;
 	@FXML
@@ -204,7 +204,8 @@ public class pantallaJuegoController {
 		TipoCasilla turno = new TipoCasilla("", 0);
 		// Update the Text
 		dadoResultText.setText("Ha salido: " + diceResult);
-
+		lento.setDisable(false);
+		rapido.setDisable(false);
 		// Update the position
 		
 		if (GuardarConBD.getPierdeTurno()) {
@@ -214,6 +215,7 @@ public class pantallaJuegoController {
 			alerta.showAndWait();
 			GuardarConBD.setPierdeTurno(false);
 		} else {
+			
 			moveP1(diceResult);
 		}
 	}
@@ -437,5 +439,6 @@ public class pantallaJuegoController {
 			e.printStackTrace();
 		}
 	}
+	
 
 }

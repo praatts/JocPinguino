@@ -456,6 +456,8 @@ public class TipoCasilla extends Casilla {
 		} else if (totalObjetos >= 1 && totalObjetos <= 5) {
 			alerta.setContentText("Has caído en una casilla con suelo quebradizo, al tener menos de 5 objetos pierdes un turno, lanza el dado para perder el turno!");
 			GuardarConBD.setPierdeTurno(true);
+			controlador.rapido.setDisable(true);
+			controlador.lento.setDisable(true);
 
 		} else {
 			alerta.setContentText("Has caído en una casilla con suelo quebradizo), al tener más de 5 objetos regresas al inicio :(");

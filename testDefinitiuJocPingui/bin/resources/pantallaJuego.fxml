@@ -82,42 +82,42 @@
               <content>
                 <AnchorPane prefHeight="155.0" prefWidth="848.0">
                   <children>
-                    <Text fx:id="rapido_t" text="Dado rápido: 0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="30.0">
+                    <Text fx:id="rapido_t" layoutX="60.0" layoutY="64.0" text="Dado rápido: 0" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="31.626953125">
                       <font>
                         <Font size="30.0" />
                       </font>
                     </Text>
-                    <Text fx:id="lento_t" text="Dado lento: 0" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="30.0">
+                    <Text fx:id="lento_t" layoutX="315.0" layoutY="64.0" text="Dado lento: 0" AnchorPane.leftAnchor="315.0" AnchorPane.topAnchor="31.626953125">
                       <font>
                         <Font size="30.0" />
                       </font>
                     </Text>
-                    <Text fx:id="peces_t" text="Peces: 0" AnchorPane.leftAnchor="500.0" AnchorPane.topAnchor="30.0">
+                    <Text fx:id="peces_t" layoutX="568.0" layoutY="64.0" text="Peces: 0" AnchorPane.leftAnchor="568.0" AnchorPane.topAnchor="31.626953125">
                       <font>
                         <Font size="30.0" />
                       </font>
                     </Text>
-                    <Text fx:id="nieve_t" layoutX="701.0" layoutY="62.0" text="Inventario" AnchorPane.leftAnchor="701.0" AnchorPane.topAnchor="29.626953125">
+                    <Text fx:id="nieve_t" layoutX="782.0" layoutY="65.0" text="Inventario" AnchorPane.leftAnchor="782.0" AnchorPane.topAnchor="32.0">
                       <font>
                         <Font size="30.0" />
                       </font>
                     </Text>
-                    <Button fx:id="rapido" onAction="#handleRapido" text="Usar" AnchorPane.leftAnchor="55.0" AnchorPane.topAnchor="90.0">
+                    <Button fx:id="rapido" layoutX="108.0" layoutY="90.0" onAction="#handleRapido" text="Usar" AnchorPane.leftAnchor="108.0" AnchorPane.topAnchor="90.0">
                       <font>
                         <Font size="30.0" />
                       </font>
                     </Button>
-                    <Button fx:id="lento" onAction="#handleLento" text="Usar" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="90.0">
+                    <Button fx:id="lento" layoutX="354.0" layoutY="90.0" onAction="#handleLento" text="Usar" AnchorPane.leftAnchor="354.0" AnchorPane.topAnchor="90.0">
                       <font>
                         <Font size="30.0" />
                       </font>
                     </Button>
-                    <Button fx:id="peces" text="Usar" AnchorPane.leftAnchor="505.0" AnchorPane.topAnchor="90.0">
+                    <Button fx:id="peces" layoutX="571.0" layoutY="90.0" text="Usar" AnchorPane.leftAnchor="571.0" AnchorPane.topAnchor="90.0">
                       <font>
                         <Font size="30.0" />
                       </font>
                     </Button>
-                    <Button fx:id="inventario" layoutX="695.0" layoutY="90.0" onAction="#handleMostrarInventario" prefHeight="65.0" prefWidth="144.0" text="Mostrar" AnchorPane.leftAnchor="695.0" AnchorPane.topAnchor="90.0">
+                    <Button fx:id="inventario" layoutX="776.0" layoutY="90.0" onAction="#handleMostrarInventario" prefHeight="65.0" prefWidth="144.0" text="Mostrar" AnchorPane.leftAnchor="776.0" AnchorPane.topAnchor="90.0">
                       <font>
                         <Font size="30.0" />
                       </font>

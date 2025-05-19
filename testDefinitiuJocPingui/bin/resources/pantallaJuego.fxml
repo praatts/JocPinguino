@@ -80,7 +80,7 @@
             </AnchorPane>
             <ScrollPane minHeight="200.0" minWidth="680.0" prefHeight="200.0" prefWidth="992.0" vbarPolicy="NEVER">
               <content>
-                <AnchorPane prefHeight="155.0" prefWidth="848.0">
+                <AnchorPane prefHeight="155.0" prefWidth="848.0" >
                   <children>
                     <Text fx:id="rapido_t" layoutX="60.0" layoutY="64.0" text="Dado rápido: 0" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="31.626953125">
                       <font>
